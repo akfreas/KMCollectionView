@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'KMCollectionView', :exclusive => true do
+  pod "KMCollectionView", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "KMCollectionView", :path => "../"
+
+  pod 'Specta'
+  pod 'Expecta'
+end
