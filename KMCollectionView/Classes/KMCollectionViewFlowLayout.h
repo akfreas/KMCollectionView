@@ -1,0 +1,3 @@
+@interface KMCollectionViewFlowLayout : UICollectionViewFlowLayout
+
+@end

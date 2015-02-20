@@ -1,0 +1,5 @@
+@class KMCollectionViewAggregateDataSource, KMCollectionViewAggregateDataManager;
+
+@interface KMCollectionViewDataManagerDataSourceLinker : NSObject
++ (void)linkAggregateDataSource:(KMCollectionViewAggregateDataSource *)aggregateDataSource toAggregateDataManager:(KMCollectionViewAggregateDataManager *)dataManager;
+@end

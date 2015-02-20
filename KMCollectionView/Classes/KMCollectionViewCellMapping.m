@@ -1,0 +1,21 @@
+#import "KMCollectionViewCellMapping.h"
+
+
+@implementation KMCollectionViewCellMapping
+
++ (instancetype)cellMappingWithIdentifier:(NSString *)identifier cellClass:(Class)cellClass size:(CGSize)size options:(KMCollectionViewCellMappingOptions)options
+{
+    KMCollectionViewCellMapping *mapping = [KMCollectionViewCellMapping new];
+    mapping.identifier = identifier;
+    mapping.cellClass = cellClass;
+    mapping.size = size;
+    mapping.options = options;
+    mapping.minimumInterItemSpacing = 5.0f;
+    return mapping;
+}
+
+- (NSString *)cellClassString {
+    return NSStringFromClass(self.cellClass);
+}
+
+@end

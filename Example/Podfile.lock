@@ -1,0 +1,40 @@
+PODS:
+  - BlocksKit (2.2.5):
+    - BlocksKit/All (= 2.2.5)
+  - BlocksKit/All (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (2.2.5)
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - BlocksKit/MessageUI (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/UIKit (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - Expecta (0.3.2)
+  - KMCollectionView (0.1.0):
+    - BlocksKit (~> 2.2)
+    - PureLayout (~> 2.0)
+  - PureLayout (2.0.5)
+  - Specta (0.3.2)
+
+DEPENDENCIES:
+  - Expecta
+  - KMCollectionView (from `../`)
+  - Specta
+
+EXTERNAL SOURCES:
+  KMCollectionView:
+    :path: ../
+
+SPEC CHECKSUMS:
+  BlocksKit: 4439e7f30a9f90743462ca63545a15c1f4304cef
+  Expecta: ee641011fe10aa1855d487b40e4976dac50ec342
+  KMCollectionView: 01312425ff6730bee307a18190ae7f2007bf8fa4
+  PureLayout: 63a3257320223e8edddcd3afb407445f85a6bf74
+  Specta: 698a58ffa5ec948327d3b92eab50ca58d7f4fbe8
+
+COCOAPODS: 0.35.0
