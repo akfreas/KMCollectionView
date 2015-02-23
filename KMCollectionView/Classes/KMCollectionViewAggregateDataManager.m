@@ -148,13 +148,15 @@
 {
     KMCollectionViewCellMapping *mapping = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellInformationForIndexPath:indexPath];
     CGSize cellSize = mapping.size;
-    if (mapping.options & KMCollectionViewCellMappingHeightUndefined) {
-        cellSize.height = 44.0f;
-    }
     if (mapping.options & KMCollectionViewCellMappingWidthUndefined) {
         cellSize.width = collectionView.frame.size.width;
     } else if (mapping.options & KMCollectionViewCellMappingWidthAsPercentage) {
         cellSize.width = collectionView.frame.size.width * cellSize.width;
+    }
+    if (mapping.options & KMCollectionViewCellMappingHeightUndefined) {
+        cellSize.height = 44.0f;
+    } else if (mapping.options & KMCollectionViewCellMappingSquare) {
+        cellSize.height = cellSize.width;
     }
     return cellSize;
 }
