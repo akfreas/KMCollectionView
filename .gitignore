@@ -16,3 +16,4 @@ DerivedData
 .idea/
 **/Pods/
 **/Podfile.lock #https://github.com/CocoaPods/CocoaPods/blob/master/.gitignore
+*.xccheckout
