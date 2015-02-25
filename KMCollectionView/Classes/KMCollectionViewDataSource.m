@@ -31,12 +31,11 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
 
 - (void)loadContent
 {
-    [NSException raise:KMNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];
 }
 
 - (void)setLoadingState:(NSString *)loadingState
 {
-    
+    _loadingState = loadingState;
 }
 
 - (NSString *)loadingState
@@ -154,12 +153,6 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
 }
 
 - (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForIndexPath:(NSIndexPath *)indexPath
-{
-    [NSException raise:KMNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];
-    return nil;
-}
-
-- (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForSectionAtIndex:(NSInteger)section
 {
     [NSException raise:KMNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];
     return nil;

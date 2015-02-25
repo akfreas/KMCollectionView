@@ -1,5 +1,6 @@
 #import "KMCollectionViewDataManager.h"
 #import "KMCollectionViewDataManager_private.h"
+#import "KMCollectionViewDataSource.h"
 
 @interface KMCollectionViewDataManager ()
 
@@ -163,6 +164,74 @@ static NSString *kItemCountKey = @"itemCount";
     KMDataManagerViewActionBlock block = self.actionMap[indexPath];
     [self.delegate dataManager:self wantsToPerformViewAction:block];
 }
+
+
+#pragma mark UICollectionViewFlowLayout
+/*
+ This code that helps with the collection view layout should really not be in this
+ class.  In the future, it should be moved to the layout itself, where the layout can
+ connect to the datasource and query these methods itself.
+ */
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    KMCollectionViewCellMapping *mapping = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellInformationForSectionAtIndex:section];
+    UIEdgeInsets insets = UIEdgeInsetsEqualToEdgeInsets(mapping.edgeInsets, UIEdgeInsetsZero) == NO ? mapping.edgeInsets : UIEdgeInsetsZero;
+    return insets;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    KMCollectionViewCellMapping *mapping = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellInformationForSectionAtIndex:section];
+    CGFloat minimumSpacing = mapping.minimumInterItemSpacing;
+    return minimumSpacing;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    KMCollectionViewCellMapping *mapping = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellInformationForIndexPath:indexPath];
+    CGSize cellSize = mapping.size;
+    if (mapping.options & KMCollectionViewCellMappingWidthUndefined) {
+        cellSize.width = collectionView.frame.size.width;
+    } else if (mapping.options & KMCollectionViewCellMappingWidthAsPercentage) {
+        cellSize.width = collectionView.frame.size.width * cellSize.width;
+    }
+    if (mapping.options & KMCollectionViewCellMappingHeightUndefined) {
+        cellSize.height = 44.0f;
+    } else if (mapping.options & KMCollectionViewCellMappingSquare) {
+        cellSize.height = cellSize.width;
+    }
+    return cellSize;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    KMCollectionViewCellMapping *mapping = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellInformationForSectionAtIndex:section];
+    return mapping.minimumLineSpacing;
+}
+
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    KMCollectionViewCellMapping *mapping = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellInformationForHeaderInSection:section];
+    CGSize cellSize = mapping? mapping.size : CGSizeZero;
+    if (mapping.options & KMCollectionViewCellMappingWidthUndefined) {
+        cellSize.width = collectionView.frame.size.width;
+    }
+    return cellSize;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
+{
+    
+    KMCollectionViewCellMapping *mapping = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellInformationForFooterInSection:section];
+    CGSize cellSize = mapping? mapping.size : CGSizeZero;
+    if (mapping.options & KMCollectionViewCellMappingWidthUndefined) {
+        cellSize.width = collectionView.frame.size.width;
+    }
+    return cellSize;
+}
+
 
 @end
 

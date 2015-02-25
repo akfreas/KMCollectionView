@@ -9,13 +9,13 @@ static __weak id currentFirstResponder;
 
 @implementation UIResponder (FirstResponder)
 
-+(id)currentFirstResponder {
++ (id)currentFirstResponder {
     currentFirstResponder = nil;
     [[UIApplication sharedApplication] sendAction:@selector(findFirstResponder:) to:nil from:nil forEvent:nil];
     return currentFirstResponder;
 }
 
--(void)findFirstResponder:(id)sender {
+- (void)findFirstResponder:(id)sender {
     currentFirstResponder = self;
 }
 
@@ -27,6 +27,7 @@ static void * const KMCollectionViewKVOContext = @"KMDataSourceContext";
 @interface KMCollectionViewController () <KMCollectionViewDataSourceDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic) BOOL wantsContentOffsetUpdates;
 @property (nonatomic) BOOL shouldUpdateContentOffset;
+@property (nonatomic) KMCollectionViewDataManager *defaultDataManager;
 @property (nonatomic, copy) void(^pendingContentOffsetUpdateBlocks)();
 @property (nonatomic) UIGestureRecognizer *tapToExitGesture;
 @end
@@ -60,6 +61,9 @@ static void * const KMCollectionViewKVOContext = @"KMDataSourceContext";
 - (void)loadView
 {
     [super loadView];
+    self.defaultDataManager = [KMCollectionViewDataManager new];
+    self.collectionView.delegate = self.defaultDataManager;
+    
     self.collectionView.pagingEnabled = NO;
     [self.collectionView addObserver:self forKeyPath:@"dataSource" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:KMCollectionViewKVOContext];
 }
