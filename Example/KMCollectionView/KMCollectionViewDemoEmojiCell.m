@@ -10,19 +10,20 @@
 
 @implementation KMCollectionViewDemoEmojiCell
 
-- (instancetype)init
+- (instancetype)initWithFrame:(CGRect)frame
 {
-    self = [super init];
+    self = [super initWithFrame:frame];
     if (self) {
         [self addLabel];
         [self addLayoutConstraints];
         [self configureLabel];
+//        self.contentView.backgroundColor = [UIColor redColor];
     }
     return self;
 }
 
 
-- (void)setCharacter:(int)character
+- (void)setCharacter:(NSString *)character
 {
     _character = character;
     [self configureLabel];
@@ -30,7 +31,7 @@
 
 - (void)configureLabel
 {
-    self.emoji.text = [Emoji emojiWithCode:self.character];
+    self.emoji.text = self.character;
 }
 
 - (void)addLabel

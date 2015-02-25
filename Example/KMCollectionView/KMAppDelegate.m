@@ -7,6 +7,7 @@
 //
 
 #import "KMAppDelegate.h"
+#import "KMCollectionViewControllerDemo.h"
 #import <KMCollectionView/KMCollectionViewController.h>
 
 @implementation KMAppDelegate
@@ -14,6 +15,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    self.window.rootViewController = [KMCollectionViewControllerDemo new];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 							

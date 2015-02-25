@@ -1,5 +1,5 @@
 #import "KMCollectionViewDemoAggregateDataSource.h"
-#import "kmcollectionviewdemo"
+#import "KMCollectionViewDemoEmojiDataSource.h"
 
 @implementation KMCollectionViewDemoAggregateDataSource
 
@@ -7,7 +7,7 @@
 {
     self = [super init];
     if (self) {
-        
+        [self addDatasource:[KMCollectionViewDemoEmojiDataSource new] forGlobalSection:0];
     }
     return self;
 }

@@ -2,6 +2,6 @@
 
 @interface KMCollectionViewDemoEmojiCell : UICollectionViewCell
 
-@property (nonatomic) int character;
+@property (nonatomic) NSString *character;
 
 @end
