@@ -1,7 +1,7 @@
 #import "KMCollectionViewController.h"
 #import "KMCollectionViewDataSource.h"
 #import "KMCollectionViewDataSource_private.h"
-#import "KMCollectionViewFlowLayout.h"
+#import "KMCollectionViewLayout.h"
 #import <BlocksKit/BlocksKit+UIKit.h>
 
 
@@ -36,7 +36,7 @@ static void * const KMCollectionViewKVOContext = @"KMDataSourceContext";
 
 - (instancetype)init
 {
-    UICollectionViewFlowLayout *flowLayout = [[KMCollectionViewFlowLayout alloc] init];
+    KMCollectionViewLayout *flowLayout = [[KMCollectionViewLayout alloc] init];
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
         self.shouldUpdateContentOffset = YES;
@@ -152,16 +152,6 @@ static void * const KMCollectionViewKVOContext = @"KMDataSourceContext";
         [self.collectionView removeGestureRecognizer:self.tapToExitGesture];
         self.tapToExitGesture = nil;
     }
-}
-
-#pragma mark - Accessors
-
-- (NSString *)cancelationIdentifier
-{
-    if (_cancelationIdentifier == nil) {
-        _cancelationIdentifier = [NSString stringWithFormat:@"%lu", (unsigned long)[self hash]];
-    }
-    return _cancelationIdentifier;
 }
 
 #pragma mark Private Methods

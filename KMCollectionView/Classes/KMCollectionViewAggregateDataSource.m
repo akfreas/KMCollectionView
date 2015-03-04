@@ -78,12 +78,26 @@
     return _dataSources;
 }
 
+- (NSInteger)localSectionForGlobalSection:(NSInteger)section
+{
+    __block NSInteger runningSections = 0;
+    [self.dataSources enumerateKeysAndObjectsUsingBlock:^(NSNumber *index, KMCollectionViewDataSource *storedDataSource, BOOL *stop) {
+        NSInteger localSectionCount = [storedDataSource numberOfSectionsInCollectionView:nil];
+    }];
+}
+
+- (NSIndexPath *)localIndexPathForGlobalIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
 - (NSInteger)globalSectionForLocalSection:(NSInteger)section fromDataSource:(KMCollectionViewDataSource *)dataSource
 {
     __block NSNumber *sectionNumber;
     [self.dataSources enumerateKeysAndObjectsUsingBlock:^(NSNumber *index, KMCollectionViewDataSource *storedDataSource, BOOL *stop) {
         if (dataSource == storedDataSource) {
             sectionNumber = index;
+            *stop = YES;
         }
     }];
     NSInteger adjustedSection = [sectionNumber integerValue] + section;

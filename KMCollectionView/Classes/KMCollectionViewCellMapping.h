@@ -15,6 +15,8 @@ typedef enum : NSUInteger {
 @property (nonatomic) CGFloat minimumInterItemSpacing;
 @property (nonatomic) CGFloat minimumLineSpacing;
 @property (nonatomic) KMCollectionViewCellMappingOptions options;
+@property (nonatomic) NSInteger rowSpan;
+@property (nonatomic, getter=isSticky) BOOL sticky;
 
 
 + (instancetype)cellMappingWithIdentifier:(NSString *)identifier cellClass:(Class)cellClass size:(CGSize)size options:(KMCollectionViewCellMappingOptions)options;

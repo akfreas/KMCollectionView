@@ -35,7 +35,7 @@
 - (void)notifyWantsToScrollToSupplementaryView:(UICollectionReusableView *)view scrollPosition:(UICollectionViewScrollPosition)position completion:(void(^)())completion;
 - (void)notifySectionsInsertedAtIndexSet:(NSIndexSet *)indexSet;
 - (void)notifySectionsRemovedAtIndexSet:(NSIndexSet *)indexSet;
-
+- (NSInteger)numberOfSections;
 - (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForIndexPath:(NSIndexPath *)indexPath;
 
 - (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForSectionAtIndex:(NSInteger)section;
