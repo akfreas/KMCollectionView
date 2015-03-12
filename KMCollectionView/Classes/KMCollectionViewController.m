@@ -156,12 +156,12 @@ static void * const KMCollectionViewKVOContext = @"KMDataSourceContext";
 
 #pragma mark - Accessors
 
-- (NSString *)cancelationIdentifier
+- (NSString *)identifier
 {
-    if (_cancelationIdentifier == nil) {
-        _cancelationIdentifier = [NSString stringWithFormat:@"%lu", (unsigned long)[self hash]];
+    if (_identifier == nil) {
+        _identifier = [NSString stringWithFormat:@"%lu", (unsigned long)[self hash]];
     }
-    return _cancelationIdentifier;
+    return _identifier;
 }
 
 #pragma mark Private Methods
