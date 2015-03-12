@@ -23,7 +23,7 @@
 {
     static KMCollectionViewCellMapping *mapping;
     if (mapping == nil) {
-        mapping = [KMCollectionViewCellMapping cellMappingWithIdentifier:@"EmojiCell" cellClass:[KMCollectionViewDemoEmojiCell class] size:CGSizeMake(0.10, 0.10) options:KMCollectionViewCellMappingWidthAsPercentage | KMCollectionViewCellMappingSquare];
+        mapping = [KMCollectionViewCellMapping cellMappingWithIdentifier:@"EmojiCell" cellClass:[KMCollectionViewDemoEmojiCell class] size:CGSizeMake(0.5f, 50.0f) options:KMCollectionViewCellMappingWidthAsPercentage];
     }
     return mapping;
 }
@@ -36,6 +36,11 @@
 
 #pragma mark UICollectionView DataSource
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 2;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return [self.emoji count];
@@ -45,6 +50,7 @@
 {
     KMCollectionViewCellMapping *mapping = [self collectionView:collectionView cellInformationForIndexPath:indexPath];
     KMCollectionViewDemoEmojiCell *cell = (KMCollectionViewDemoEmojiCell *)[collectionView dequeueReusableCellWithReuseIdentifier:mapping.identifier forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
     cell.character = self.emoji[indexPath.row];
     return cell;
 }

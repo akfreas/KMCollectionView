@@ -29,6 +29,11 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     return self;
 }
 
+- (NSInteger)numberOfSections
+{
+    return 1;
+}
+
 - (void)loadContent
 {
 }
@@ -144,6 +149,11 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
 {
     [NSException raise:KMNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];
     return nil;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return self.numberOfSections;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

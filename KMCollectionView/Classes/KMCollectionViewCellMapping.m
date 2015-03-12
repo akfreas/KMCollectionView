@@ -11,6 +11,7 @@
     mapping.size = size;
     mapping.options = options;
     mapping.minimumInterItemSpacing = 5.0f;
+    mapping.rowSpan = 1;
     return mapping;
 }
 

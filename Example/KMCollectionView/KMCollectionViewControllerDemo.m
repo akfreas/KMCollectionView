@@ -21,6 +21,7 @@
 {
     [super viewDidLoad];
     self.aggregateDataSource = [KMCollectionViewDemoAggregateDataSource new];
+    self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.dataSource = self.aggregateDataSource;
 }
 
