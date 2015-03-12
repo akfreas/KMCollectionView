@@ -32,8 +32,10 @@
         }
     }
     [newDatasourceMapping setObject:dataSource forKey:[NSNumber numberWithUnsignedInteger:section]];
-    self.dataSources = newDatasourceMapping;
-    [self notifySectionsInsertedAtIndexSet:indexSet];
+    [self notifyBatchUpdate:^{
+        self.dataSources = newDatasourceMapping;
+        [self notifySectionsInsertedAtIndexSet:indexSet];
+    }];
 }
 
 - (void)removeDatasourceForGlobalSection:(NSInteger)section
@@ -50,8 +52,10 @@
             [newDatasourceMapping setObject:self.dataSources[number] forKey:[NSNumber numberWithUnsignedInteger:[number unsignedIntegerValue]-1]];
         }
     }
-    self.dataSources = newDatasourceMapping;
-    [self notifySectionsRemovedAtIndexSet:[NSIndexSet indexSetWithIndex:section]];
+    [self notifyBatchUpdate:^{
+        self.dataSources = newDatasourceMapping;
+        [self notifySectionsRemovedAtIndexSet:[NSIndexSet indexSetWithIndex:section]];
+    }];
 }
 
 - (NSInteger)globalSectionForDatasourceClass:(Class)dataSourceClass
