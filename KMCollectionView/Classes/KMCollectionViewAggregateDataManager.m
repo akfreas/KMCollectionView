@@ -81,6 +81,7 @@
     if ([collectionView.dataSource isKindOfClass:[KMCollectionViewAggregateDataSource class]]) {
         KMCollectionViewDataSource *dataSource = [self dataSourceForIndexPath:indexPath withCollectionView:collectionView];
         manager = dataSource.dataManager;
+        manager.delegate = self;
     }
     if (manager == nil) {
         manager = self.dataManagerMap[@(indexPath.section)];
