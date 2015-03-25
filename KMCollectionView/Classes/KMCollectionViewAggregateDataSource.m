@@ -58,6 +58,20 @@
     }];
 }
 
+- (void)removeDatasource:(KMCollectionViewDataSource *)dataSource
+{
+    __block NSNumber *section = nil;
+    [self.dataSources enumerateKeysAndObjectsUsingBlock:^(NSNumber *dsSection, KMCollectionViewDataSource *existingDS, BOOL *stop) {
+        if (existingDS == dataSource) {
+            section = dsSection;
+            *stop = YES;
+        }
+    }];
+    if (section != nil) {
+        [self removeDatasourceForGlobalSection:[section integerValue]];
+    }
+}
+
 - (NSInteger)globalSectionForDatasourceClass:(Class)dataSourceClass
 {
     NSInteger globalSection = NSNotFound;
