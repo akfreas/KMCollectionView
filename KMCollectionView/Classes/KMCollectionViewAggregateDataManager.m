@@ -105,7 +105,7 @@
 {
     NSIndexPath *mappedIndexPath = [KMCollectionViewUtilities mappedIndexPathForGlobalIndexPath:indexPath];
     KMCollectionViewDataManager *manager = [self dataManagerForIndexPath:indexPath withCollectionView:collectionView];
-    if (manager != nil) {
+    if (manager != nil && [manager respondsToSelector:@selector(collectionView:shouldSelectItemAtIndexPath:)]) {
         return [manager collectionView:collectionView shouldSelectItemAtIndexPath:mappedIndexPath];
     }
     return NO;
