@@ -15,6 +15,7 @@
 - (void)addDatasource:(KMCollectionViewDataSource *)dataSource forGlobalSection:(NSInteger)section
 {
     dataSource.delegate = self;
+    dataSource.cancelationID = self.cancelationID;
     self.dataSources[@(section)] = dataSource;
 }
 
@@ -84,6 +85,14 @@
     }
     
     return globalSection;
+}
+
+- (void)setCancelationID:(NSString *)cancelationID
+{
+    [self.dataSources enumerateKeysAndObjectsUsingBlock:^(id key, KMCollectionViewDataSource *dataSource, BOOL *stop) {
+        dataSource.cancelationID = cancelationID;
+    }];
+    [super setCancelationID:cancelationID];
 }
 
 #pragma mark - Private Methods
