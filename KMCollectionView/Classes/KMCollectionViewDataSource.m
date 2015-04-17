@@ -57,7 +57,7 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
         if (state == nil) {
             return;
         }
-        [self endLoadingWithState:state error:err update:^{
+        [weakself endLoadingWithState:state error:err update:^{
             KMCollectionViewDataSource *me = weakself;
             if (update && me) {
                 update(me);
@@ -74,7 +74,6 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
 {
     self.loadingState = newState;
     self.loadingError = error;
-    
     if (self.shouldDisplayPlaceholder) {
         if (update) {
             [self enqueuePendingUpdateBlock:update];
