@@ -39,16 +39,15 @@ static __weak id currentFirstResponder;
         self.defaultDataManager = [KMCollectionViewDataManager new];
         self.pagingEnabled = NO;
         self.delegate = self.defaultDataManager;
-        [self addObserver:self forKeyPath:@"dataSource" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:self.KMCollectionViewKVOContext];
         [self addTransientObservers];
-
+        [self addLifetimeObservers];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"dataSource" context:self.self.KMCollectionViewKVOContext];
+    [self removeObserver:self forKeyPath:@"dataSource" context:self.KMCollectionViewKVOContext];
 }
 
 - (void)didMoveToWindow
@@ -57,14 +56,14 @@ static __weak id currentFirstResponder;
     if ([dataSource isKindOfClass:[KMCollectionViewDataSource class]]) {
         [dataSource registerReusableViewsWithCollectionView:self];
     }
-    [self addTransientObservers];
 }
 
-
-- (void)viewDidDisappear:(BOOL)animated
+- (void)willMoveToWindow:(UIWindow *)newWindow
 {
-    [self removeAllObservers];
-    [self removeTapGesture];
+    if (newWindow == nil) {
+        [self removeAllObservers];
+        [self removeTapGesture];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -94,7 +93,7 @@ static __weak id currentFirstResponder;
     if (self.tapToExitGesture != nil) {
         return;
     }
-    UIGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(adjustContentOffsetToApproprate)];
+    UIGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(adjustContentOffsetToAppropriate)];
     tapGesture.delegate = self;
     [self addGestureRecognizer:tapGesture];
     self.tapToExitGesture = tapGesture;
@@ -110,7 +109,7 @@ static __weak id currentFirstResponder;
 
 #pragma mark Private Methods
 
-- (void)adjustContentOffsetToApproprate
+- (void)adjustContentOffsetToAppropriate
 {
     if (self.contentSize.height <= self.frame.size.height) {
         [UIView animateWithDuration:0.25f animations:^{
@@ -133,6 +132,7 @@ static __weak id currentFirstResponder;
     UIResponder *currentResponder = [UIResponder currentFirstResponder];
     [currentResponder resignFirstResponder];
     [self removeTapGesture];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(addTransientObservers) object:nil];
     [self performSelector:@selector(addTransientObservers) withObject:nil afterDelay:0.2f];
     [self.collectionViewLayout invalidateLayout];
 }
@@ -147,6 +147,7 @@ static __weak id currentFirstResponder;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustCollectionViewContentForKeyboardNotif:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustCollectionViewContentForKeyboardNotif:) name:UIKeyboardWillHideNotification object:nil];
+
     [self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:self.KMCollectionViewKVOContext];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeKeyboardAnimationState:) name:UIKeyboardDidShowNotification object:nil];
@@ -176,6 +177,7 @@ static __weak id currentFirstResponder;
 
 - (void)removeAllObservers
 {
+    [self removeObserver:self forKeyPath:@"contentOffset"];
     [self removeNotificationObservers];
 }
 
@@ -223,10 +225,12 @@ static __weak id currentFirstResponder;
         } else if (self.contentOffset.y >= self.frame.size.height) {
             yValue = self.contentOffset.y + (kbdFrame.size.height * direction);
         } else {
-            yValue = (CGRectGetMaxY(currentView.frame) - kbdFrame.origin.y + self.frame.origin.y)*direction;
+            CGPoint p = [self convertPoint:kbdFrame.origin fromView:[UIApplication sharedApplication].keyWindow];
+            p.y -= CGRectGetHeight(currentView.frame);
+            yValue = p.y - self.contentOffset.y;// (CGRectGetMaxY(currentView.frame) - kbdFrame.origin.y + self.frame.origin.y)*direction;
             //avoid pushing views down
         }
-        if (yValue < 0.0) {
+        if (yValue < 0.0) { 
             return;
             // avoid scrolling back on dismiss the keyboard the collection views content is smaller than the view
         } else if (notif.name == UIKeyboardWillHideNotification && self.contentSize.height < self.frame.size.height) {
