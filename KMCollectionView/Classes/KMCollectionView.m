@@ -48,6 +48,7 @@ static __weak id currentFirstResponder;
 - (void)dealloc
 {
     [self removeObserver:self forKeyPath:@"dataSource" context:self.KMCollectionViewKVOContext];
+    [self removeObserver:self forKeyPath:@"contentOffset" context:self.KMCollectionViewKVOContext];
 }
 
 - (void)didMoveToWindow
@@ -62,7 +63,6 @@ static __weak id currentFirstResponder;
 {
     if (newWindow == nil) {
         [self removeAllObservers];
-        [self removeObserver:self forKeyPath:@"contentOffset"];
         [self removeTapGesture];
     }
 }
