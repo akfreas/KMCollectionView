@@ -221,6 +221,16 @@
     return mapping;
 }
 
+- (NSObject *)collectionView:(UICollectionView *)collectionView cellDataForIndexPath:(NSIndexPath *)indexPath
+{
+    KMCollectionViewDataSource *dataSource = [self datasourceForIndexPath:indexPath];
+    NSObject *cellData = nil;
+    if ([dataSource respondsToSelector:_cmd]) {
+        cellData = [dataSource collectionView:collectionView cellDataForIndexPath:[KMCollectionViewUtilities mappedIndexPathForGlobalIndexPath:indexPath]];
+    }
+    return cellData;
+}
+
 
 - (void)loadContent
 {

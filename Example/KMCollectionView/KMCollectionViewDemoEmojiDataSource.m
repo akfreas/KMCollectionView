@@ -23,7 +23,7 @@
 {
     static KMCollectionViewCellMapping *mapping;
     if (mapping == nil) {
-        mapping = [KMCollectionViewCellMapping cellMappingWithIdentifier:@"EmojiCell" cellClass:[KMCollectionViewDemoEmojiCell class] size:CGSizeMake(0.5f, 50.0f) options:KMCollectionViewCellMappingWidthAsPercentage];
+        mapping = [KMCollectionViewCellMapping cellMappingWithIdentifier:@"EmojiCell" cellClass:[KMCollectionViewDemoEmojiCell class] size:CGSizeMake(0.5, 1.0) options:KMCollectionViewCellMappingAutoLayoutSize];
     }
     return mapping;
 }
@@ -53,6 +53,14 @@
     cell.backgroundColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
     cell.character = self.emoji[indexPath.row];
     return cell;
+}
+
+- (NSObject *)collectionView:(UICollectionView *)collectionView cellDataForIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row < [self.emoji count]) {
+        return self.emoji[indexPath.row];
+    }
+    return nil;
 }
 
 @end

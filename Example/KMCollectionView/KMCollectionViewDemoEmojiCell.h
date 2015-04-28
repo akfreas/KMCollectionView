@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
+#import <KMCollectionView/KMCollectionViewCell.h>
 
-@interface KMCollectionViewDemoEmojiCell : UICollectionViewCell
+@interface KMCollectionViewDemoEmojiCell : KMCollectionViewCell
 
 @property (nonatomic) NSString *character;
 

@@ -42,7 +42,18 @@
 
 - (void)addLayoutConstraints
 {
-    [self.emoji autoCenterInSuperviewMargins];
+    self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.emoji autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(10.0, 5.0, 10.0, 5.0)];
+}
+
+- (void)configureCellDataWithObject:(NSObject *)object
+{
+    if ([object isKindOfClass:[NSString class]]) {
+        NSString *string = (NSString *)object;
+        [self setCharacter:string];
+    } else {
+        [self setCharacter:nil];
+    }
 }
 
 @end
