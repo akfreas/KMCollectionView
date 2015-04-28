@@ -9,26 +9,24 @@
 
 Pod::Spec.new do |s|
   s.name             = "KMCollectionView"
-  s.version          = "0.1.0"
-  s.summary          = "A short description of KMCollectionView."
+  s.version          = "0.2.0"
+  s.summary          = "KMCollectionView is the basis for smooth layouts in the Komoot iOS app."
   s.description      = <<-DESC
                        An optional longer description of KMCollectionView
 
                        * Markdown format.
                        * Don't worry about the indent, we strip it!
                        DESC
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/KMCollectionView"
+  s.homepage         = "https://github.com/komoot/KMCollectionView"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Alexander Freas" => "alex@komoot.de" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/KMCollectionView.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => "https://github.com/komoot/KMCollectionView.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true
 
   s.source_files = 'KMCollectionView/Classes/**/*'
-  # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit','Foundation'
   s.dependency 'PureLayout', '~> 2.0'
   s.dependency 'BlocksKit', '~> 2.2'
