@@ -1,5 +1,7 @@
 #import "KMCollectionViewCell.h"
 
+NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverrideException";
+
 @implementation KMCollectionViewCell
 
 - (void)_invalidateCollectionViewLayout
@@ -25,7 +27,7 @@
 
 - (void)configureCellDataWithObject:(NSObject *)object
 {
-    NSAssert(NO, @"overrride this method");
+    [NSException raise:KMCollectionViewCellNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];
 }
 
 - (CGSize)prepreferredLayoutSizeFittingSize:(CGSize)targetSize
@@ -50,6 +52,8 @@
     // this causes the cell to compute the height it needs, which it does by asking the
     // label what height it needs to wrap within its current bounds (which we just set).
     CGSize computedSize = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    
+    self.frame = originalFrame;
     return computedSize;
 }
 @end
