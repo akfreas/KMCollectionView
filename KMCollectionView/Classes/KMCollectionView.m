@@ -62,6 +62,7 @@ static __weak id currentFirstResponder;
 {
     if (newWindow == nil) {
         [self removeAllObservers];
+        [self removeObserver:self forKeyPath:@"contentOffset"];
         [self removeTapGesture];
     }
 }
@@ -178,7 +179,6 @@ static __weak id currentFirstResponder;
 
 - (void)removeAllObservers
 {
-    [self removeObserver:self forKeyPath:@"contentOffset"];
     [self removeNotificationObservers];
 }
 
