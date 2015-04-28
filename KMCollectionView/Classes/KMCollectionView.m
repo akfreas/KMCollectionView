@@ -80,6 +80,7 @@ static __weak id currentFirstResponder;
         
         if ([dataSource isKindOfClass:[KMCollectionViewDataSource class]]) {
             KMCollectionViewDataSource *kmDataSource = (KMCollectionViewDataSource *)dataSource;
+            [kmDataSource registerReusableViewsWithCollectionView:self];
             if (!kmDataSource.delegate)
                 kmDataSource.delegate = self;
         }
