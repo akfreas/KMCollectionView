@@ -1,6 +1,7 @@
 #import "KMCollectionViewDataManager.h"
 #import "KMCollectionViewDataManager_private.h"
 #import "KMCollectionViewDataSource.h"
+#import "KMCollectionViewCell.h"
 
 @interface KMCollectionViewDataManager ()
 
@@ -193,13 +194,45 @@ static NSString *kItemCountKey = @"itemCount";
     CGSize cellSize = mapping.size;
     if (mapping.options & KMCollectionViewCellMappingWidthUndefined) {
         cellSize.width = collectionView.frame.size.width;
-    } else if (mapping.options & KMCollectionViewCellMappingWidthAsPercentage) {
+    }
+    
+    if (mapping.options & KMCollectionViewCellMappingWidthAsPercentage) {
         cellSize.width = collectionView.frame.size.width * cellSize.width;
     }
     if (mapping.options & KMCollectionViewCellMappingHeightUndefined) {
         cellSize.height = 44.0f;
-    } else if (mapping.options & KMCollectionViewCellMappingSquare) {
+    }
+    if (mapping.options & KMCollectionViewCellMappingSquare) {
         cellSize.height = cellSize.width;
+    }
+    if (mapping.options & KMCollectionViewCellMappingAutoLayoutSize) {
+        UICollectionViewCell *sizingCell = [[NSClassFromString(mapping.cellClassString) alloc] initWithFrame:CGRectZero];
+        if ([sizingCell isKindOfClass:[KMCollectionViewCell class]]) {
+            NSObject *cellData = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellDataForIndexPath:indexPath];
+            KMCollectionViewCell *collectionViewCell = (KMCollectionViewCell *)sizingCell;
+            [collectionViewCell configureCellDataWithObject:cellData];
+            CGFloat requiredWidth = cellSize.width;
+            
+            // NOTE: here is where we ask our sizing cell to compute what height it needs
+            CGSize targetSize = CGSizeMake(requiredWidth, 0.0);
+            CGSize computedSize = [collectionViewCell prepreferredLayoutSizeFittingSize:targetSize];
+            
+            // collection view doesn't like cells with an height of zero
+            if (computedSize.height > 0.0) {
+                cellSize.height = computedSize.height;
+            } else {
+                cellSize.height = 44.0f;
+            }
+            
+            if (computedSize.width > 0.0 && cellSize.width <= 1.0) {
+                cellSize.width = computedSize.width;
+            } else {
+                cellSize.width = collectionView.frame.size.width;
+            }
+        } else {
+            cellSize.width = collectionView.frame.size.width;
+            cellSize.height = 44.0f;
+        }
     }
     return cellSize;
 }

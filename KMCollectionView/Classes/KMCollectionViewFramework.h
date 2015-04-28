@@ -12,3 +12,5 @@
 #import "KMCollectionViewDataManagerDataSourceLinker.h"
 #import "KMCollectionViewActionDataManager.h"
 #import "KMCollectionViewSelectionDataManager.h"
+
+#import "KMCollectionViewCell.h"

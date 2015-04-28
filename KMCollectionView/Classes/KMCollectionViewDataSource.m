@@ -139,6 +139,8 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     return nil;
 }
 
+
+
 - (void)updateMappingForGlobalSection:(NSInteger)globalSection
 {
     [NSException raise:KMNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];
@@ -162,6 +164,12 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
 }
 
 - (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForIndexPath:(NSIndexPath *)indexPath
+{
+    [NSException raise:KMNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];
+    return nil;
+}
+
+- (NSObject *)collectionView:(UICollectionView *)collectionView cellDataForIndexPath:(NSIndexPath *)indexPath
 {
     [NSException raise:KMNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];
     return nil;
