@@ -106,7 +106,7 @@
     if (mapping.options & KMCollectionViewCellMappingHeightUndefined) {
         cellSize.height = 44.0f;
     } else if (mapping.options & KMCollectionViewCellMappingHeightAsPercentage) {
-        cellSize.height =  collectionViewFrame.size.height * cellSize.height
+        cellSize.height =  collectionViewFrame.size.height * cellSize.height;
     } else if (mapping.options & KMCollectionViewCellMappingSquare) {
         cellSize.height = cellSize.width;
     }
