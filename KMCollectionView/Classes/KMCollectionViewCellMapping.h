@@ -4,6 +4,7 @@ typedef enum : NSUInteger {
     KMCollectionViewCellMappingAutoLayoutSize = (1 << 2),
     KMCollectionViewCellMappingWidthAsPercentage = (1 << 3),
     KMCollectionViewCellMappingSquare = (1 << 4),
+    KMCollectionViewCellMappingHeightAsPercentage = (1 << 5)
 } KMCollectionViewCellMappingOptions;
 
 @interface KMCollectionViewCellMapping : NSObject
