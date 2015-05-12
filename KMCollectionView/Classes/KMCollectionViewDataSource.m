@@ -376,6 +376,16 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     }
 }
 
+- (void)notifyWantsToScrollToItemAtIndexPath:(NSIndexPath *)indexPath scrollPosition:(UICollectionViewScrollPosition)position completion:(void(^)(UICollectionViewCell *))completion
+{
+    KOMOOT_ASSERT_MAIN_THREAD;
+    
+    id<KMCollectionViewDataSourceDelegate> delegate = self.delegate;
+    if ([delegate respondsToSelector:@selector(dataSource:wantsToScrollToItemAtIndexPath:scrollPosition:completion:)]) {
+        [delegate dataSource:self wantsToScrollToItemAtIndexPath:indexPath scrollPosition:position completion:completion];
+    }
+}
+
 - (void)notifyWantsToScrollToSupplementaryViewOfType:(NSString *)type inSection:(NSInteger)section scrollPosition:(UICollectionViewScrollPosition)position
 {
     KOMOOT_ASSERT_MAIN_THREAD;

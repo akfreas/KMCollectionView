@@ -18,13 +18,15 @@ static __weak id currentFirstResponder;
 
 @end
 
-@interface KMCollectionView () <KMCollectionViewDataSourceDelegate, UIGestureRecognizerDelegate>
+@interface KMCollectionView () <KMCollectionViewDataSourceDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate>
 @property (nonatomic) BOOL wantsContentOffsetUpdates;
 @property (nonatomic) BOOL shouldUpdateContentOffset;
 @property (nonatomic) KMCollectionViewDataManager *defaultDataManager;
 @property (nonatomic, copy) void(^pendingContentOffsetUpdateBlocks)();
+@property (nonatomic, copy) void(^pendingScrollViewStateCompletionBlocks)();
 @property (nonatomic) UIGestureRecognizer *tapToExitGesture;
 @property (nonatomic) void *KMCollectionViewKVOContext;
+@property (nonatomic, weak) id<UICollectionViewDelegate> forwardingDelegate;
 @end
 
 
@@ -38,11 +40,21 @@ static __weak id currentFirstResponder;
         self.shouldUpdateContentOffset = YES;
         self.defaultDataManager = [KMCollectionViewDataManager new];
         self.pagingEnabled = NO;
-        self.delegate = self.defaultDataManager;
+        self.forwardingDelegate = self.defaultDataManager;
+        self.delegate = self;
         [self addTransientObservers];
         [self addLifetimeObservers];
     }
     return self;
+}
+
+- (void)setDelegate:(id<UICollectionViewDelegate>)delegate
+{
+    if (delegate == self) {
+        [super setDelegate:delegate];
+    } else {
+        self.forwardingDelegate = delegate;
+    }
 }
 
 - (void)dealloc
@@ -109,7 +121,38 @@ static __weak id currentFirstResponder;
     }
 }
 
-#pragma mark Private Methods
+#pragma mark - Private Methods
+
+
+#pragma mark Forwarding Methods
+
+/*
+ For certain purposes, i.e. for knowing when the scroll view has finished decelerating,
+ we need to respond to the scroll view delegate methods.  Otherwise, we need to forward
+ methods to the delegate that was set outside the collection view.  If the delegate set 
+ outside conforms to UIScrollViewDelegate, then naturally the dataSource:wantsToScrollToItemAtIndexPath:scrollPosition:completion:
+ won't work as usual.
+
+ */
+
+- (BOOL)respondsToSelector:(SEL)aSelector
+{
+    if ([KMCollectionView instancesRespondToSelector:aSelector] == NO && [self.forwardingDelegate respondsToSelector:aSelector]) {
+        return YES;
+    }
+    return [KMCollectionView instancesRespondToSelector:aSelector];
+}
+
+- (id)forwardingTargetForSelector:(SEL)aSelector
+{
+    return self.forwardingDelegate;
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    self.pendingScrollViewStateCompletionBlocks();
+}
+
 
 - (void)adjustContentOffsetToAppropriate
 {
@@ -263,6 +306,19 @@ static __weak id currentFirstResponder;
     }
 }
 
+- (void)enqueueScrollViewActionCompletionBlock:(dispatch_block_t)block
+{
+    dispatch_block_t previousBlock = self.pendingScrollViewStateCompletionBlocks;
+    if (previousBlock) {
+        self.pendingScrollViewStateCompletionBlocks = ^{
+            previousBlock();
+            block();
+        };
+    } else {
+        self.pendingScrollViewStateCompletionBlocks = block;
+    }
+}
+
 #pragma mark KMCollectionViewDataSourceDelegate
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource performBatchUpdate:(dispatch_block_t)update complete:(dispatch_block_t)complete
@@ -293,6 +349,23 @@ static __weak id currentFirstResponder;
     
     dispatch_block_t update = ^{
         [self scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:YES];
+    };
+    
+    if (self.shouldUpdateContentOffset) {
+        update();
+    } else {
+        [self enqueueContentOffsetUpdateBlock:update];
+    }
+}
+
+- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToScrollToItemAtIndexPath:(NSIndexPath *)indexPath scrollPosition:(UICollectionViewScrollPosition)position completion:(void(^)(UICollectionViewCell *))completion
+{
+    __weak typeof(&*self) weakSelf = self;
+    dispatch_block_t update = ^{
+        [weakSelf scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:YES];
+        [weakSelf enqueueScrollViewActionCompletionBlock:^{
+            completion(nil);
+        }];
     };
     
     if (self.shouldUpdateContentOffset) {

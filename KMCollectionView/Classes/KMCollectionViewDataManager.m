@@ -192,18 +192,19 @@ static NSString *kItemCountKey = @"itemCount";
 {
     KMCollectionViewCellMapping *mapping = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellInformationForIndexPath:indexPath];
     CGSize cellSize = mapping.size;
+    
     if (mapping.options & KMCollectionViewCellMappingWidthUndefined) {
         cellSize.width = collectionView.frame.size.width;
-    }
-    
-    if (mapping.options & KMCollectionViewCellMappingWidthAsPercentage) {
+    } if (mapping.options & KMCollectionViewCellMappingWidthAsPercentage) {
         cellSize.width = collectionView.frame.size.width * cellSize.width;
     }
+    
     if (mapping.options & KMCollectionViewCellMappingHeightUndefined) {
         cellSize.height = 44.0f;
-    }
-    if (mapping.options & KMCollectionViewCellMappingSquare) {
+    } else if (mapping.options & KMCollectionViewCellMappingSquare) {
         cellSize.height = cellSize.width;
+    } else if (mapping.options & KMCollectionViewCellMappingHeightAsPercentage) {
+        cellSize.height = collectionView.frame.size.height * cellSize.height;
     }
     if (mapping.options & KMCollectionViewCellMappingAutoLayoutSize) {
         UICollectionViewCell *sizingCell = [[NSClassFromString(mapping.cellClassString) alloc] initWithFrame:CGRectZero];
