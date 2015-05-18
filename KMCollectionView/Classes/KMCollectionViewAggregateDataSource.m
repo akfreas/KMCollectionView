@@ -127,6 +127,7 @@
             *stop = YES;
         }
     }];
+    NSAssert(sectionNumber != nil, @"no global section found");
     NSInteger adjustedSection = [sectionNumber integerValue] + section;
     return adjustedSection;
 }
