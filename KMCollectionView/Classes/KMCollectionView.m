@@ -27,6 +27,7 @@ static __weak id currentFirstResponder;
 @property (nonatomic) UIGestureRecognizer *tapToExitGesture;
 @property (nonatomic) void *KMCollectionViewKVOContext;
 @property (nonatomic, weak) id<UICollectionViewDelegate> forwardingDelegate;
+@property (nonatomic) BOOL contentOffsetObserverRegistered;
 @end
 
 
@@ -60,7 +61,10 @@ static __weak id currentFirstResponder;
 - (void)dealloc
 {
     [self removeObserver:self forKeyPath:@"dataSource" context:self.KMCollectionViewKVOContext];
-    [self removeObserver:self forKeyPath:@"contentOffset" context:self.KMCollectionViewKVOContext];
+    if (self.contentOffsetObserverRegistered) {
+        self.contentOffsetObserverRegistered = NO;
+        [self removeObserver:self forKeyPath:@"contentOffset" context:self.KMCollectionViewKVOContext];
+    }
 }
 
 - (void)didMoveToWindow
@@ -196,6 +200,7 @@ static __weak id currentFirstResponder;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustCollectionViewContentForKeyboardNotif:) name:UIKeyboardWillHideNotification object:nil];
 
     [self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:self.KMCollectionViewKVOContext];
+    self.contentOffsetObserverRegistered = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeKeyboardAnimationState:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeKeyboardAnimationState:) name:UIKeyboardDidHideNotification object:nil];
@@ -230,6 +235,8 @@ static __weak id currentFirstResponder;
 - (void)removeNotificationObservers
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.contentOffsetObserverRegistered = NO;
+    [self removeObserver:self forKeyPath:@"contentOffset" context:self.KMCollectionViewKVOContext];
 }
 
 - (void)adjustCollectionViewContentForKeyboardNotif:(NSNotification *)notif
