@@ -150,7 +150,9 @@ static __weak id currentFirstResponder;
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    self.pendingScrollViewStateCompletionBlocks();
+    if (self.pendingScrollViewStateCompletionBlocks) {
+        self.pendingScrollViewStateCompletionBlocks();
+    }
 }
 
 
@@ -259,29 +261,18 @@ static __weak id currentFirstResponder;
     CGFloat animationDuration = [notif.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
     CGRect kbdFrame = [notif.userInfo[keyboardKey] CGRectValue];
     [UIView animateWithDuration:animationDuration animations:^{
-        [self scrollToItemAtIndexPath:idx atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
         CGFloat yValue;
-        if (self.contentSize.height < self.contentOffset.y + self.frame.size.height && direction == 1){ //Check if we have already scrolled beyond content size of scrollview
-            CGFloat oldKeyboardSize = (self.contentOffset.y + self.frame.size.height) - self.contentSize.height;
-            
-            CGFloat offsetDelta = kbdFrame.size.height - oldKeyboardSize;
-            yValue = self.contentOffset.y + offsetDelta;
-        } else if (self.contentOffset.y >= self.frame.size.height) {
-            yValue = self.contentOffset.y + (kbdFrame.size.height * direction);
-        } else {
-            CGPoint p = [self convertPoint:kbdFrame.origin fromView:[UIApplication sharedApplication].keyWindow];
-            p.y -= CGRectGetHeight(currentView.frame);
-            yValue = p.y - self.contentOffset.y;// (CGRectGetMaxY(currentView.frame) - kbdFrame.origin.y + self.frame.origin.y)*direction;
-            //avoid pushing views down
-        }
-        if (yValue < 0.0) { 
-            return;
-            // avoid scrolling back on dismiss the keyboard the collection views content is smaller than the view
-        } else if (notif.name == UIKeyboardWillHideNotification && self.contentSize.height < self.frame.size.height) {
-            yValue = 0.0;
-        }
+        CGRect converted = [self convertRect:kbdFrame fromView:[[UIApplication sharedApplication] keyWindow]];
         
+        if (notif.name == UIKeyboardWillHideNotification && self.contentSize.height < self.frame.size.height) {
+            yValue = 0.0;
+        } else if (converted.origin.y > CGRectGetMaxY(currentView.frame)) {
+            yValue = self.contentOffset.y;
+        } else {
+            yValue = currentView.frame.origin.y + currentView.frame.size.height + self.contentOffset.y - converted.origin.y;
+        }
         [self setContentOffset:CGPointMake(self.contentOffset.x, yValue) animated:NO];
+        
     } completion:^(BOOL finished) {
         if (notif.name == UIKeyboardWillHideNotification) {
             self.wantsContentOffsetUpdates = NO;
