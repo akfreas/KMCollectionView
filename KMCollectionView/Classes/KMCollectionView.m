@@ -199,8 +199,10 @@ static __weak id currentFirstResponder;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustCollectionViewContentForKeyboardNotif:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustCollectionViewContentForKeyboardNotif:) name:UIKeyboardWillHideNotification object:nil];
 
-    [self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:self.KMCollectionViewKVOContext];
-    self.contentOffsetObserverRegistered = YES;
+    if (self.contentOffsetObserverRegistered == NO) {
+        self.contentOffsetObserverRegistered = YES;
+        [self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:self.KMCollectionViewKVOContext];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeKeyboardAnimationState:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeKeyboardAnimationState:) name:UIKeyboardDidHideNotification object:nil];
@@ -235,8 +237,10 @@ static __weak id currentFirstResponder;
 - (void)removeNotificationObservers
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    self.contentOffsetObserverRegistered = NO;
-    [self removeObserver:self forKeyPath:@"contentOffset" context:self.KMCollectionViewKVOContext];
+    if (self.contentOffsetObserverRegistered) {
+        self.contentOffsetObserverRegistered = NO;
+        [self removeObserver:self forKeyPath:@"contentOffset" context:self.KMCollectionViewKVOContext];
+    }
 }
 
 - (void)adjustCollectionViewContentForKeyboardNotif:(NSNotification *)notif
