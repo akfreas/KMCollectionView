@@ -1,6 +1,6 @@
 # KMCollectionView
 
-[![CI Status](http://img.shields.io/travis/Alexander Freas/KMCollectionView.svg?style=flat)](https://travis-ci.org/Alexander Freas/KMCollectionView)
+[![CI Status](http://img.shields.io/travis/komoot/KMCollectionView.svg?style=flat)](https://travis-ci.org/komoot/KMCollectionView)
 [![Version](https://img.shields.io/cocoapods/v/KMCollectionView.svg?style=flat)](http://cocoadocs.org/docsets/KMCollectionView)
 [![License](https://img.shields.io/cocoapods/l/KMCollectionView.svg?style=flat)](http://cocoadocs.org/docsets/KMCollectionView)
 [![Platform](https://img.shields.io/cocoapods/p/KMCollectionView.svg?style=flat)](http://cocoadocs.org/docsets/KMCollectionView)
@@ -20,7 +20,7 @@ it, simply add the following line to your Podfile:
 
 ## Author
 
-Alexander Freas, alex@komoot.de
+komoot GmbH, alex@komoot.de
 
 ## License
 
