@@ -96,6 +96,8 @@ static __weak id currentFirstResponder;
             [kmDataSource registerReusableViewsWithCollectionView:self];
             if (!kmDataSource.delegate)
                 kmDataSource.delegate = self;
+            if (kmDataSource.dataManager)
+                self.delegate = kmDataSource.dataManager;
         }
     } else if ([keyPath isEqualToString:@"contentOffset"]) {
         [self contentOffsetChanged];
@@ -357,7 +359,8 @@ static __weak id currentFirstResponder;
     dispatch_block_t update = ^{
         [weakSelf scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:YES];
         [weakSelf enqueueScrollViewActionCompletionBlock:^{
-            completion(nil);
+            UICollectionViewCell *cell = [weakSelf cellForItemAtIndexPath:indexPath];
+            completion(cell);
         }];
     };
     
