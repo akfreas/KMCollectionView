@@ -154,6 +154,7 @@ static __weak id currentFirstResponder;
 {
     if (self.pendingScrollViewStateCompletionBlocks) {
         self.pendingScrollViewStateCompletionBlocks();
+        self.pendingScrollViewStateCompletionBlocks = nil;
     }
 }
 
