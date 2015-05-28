@@ -318,11 +318,6 @@
     [self.delegate dataSource:self performBatchUpdate:update complete:complete];
 }
 
-- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToScrollToItemAtIndexPath:(NSIndexPath *)indexPath scrollPosition:(UICollectionViewScrollPosition)position
-{
-    [self.delegate dataSource:self wantsToScrollToItemAtIndexPath:[self globalIndexPath:indexPath forIndexPathFromDataSource:dataSource] scrollPosition:position];
-}
-
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToScrollToSupplementaryViewOfType:(NSString *)type inSection:(NSInteger)section scrollPosition:(UICollectionViewScrollPosition)position
 {
     [self.delegate dataSource:self wantsToScrollToSupplementaryViewOfType:type inSection:[self globalSectionForLocalSection:section fromDataSource:dataSource] scrollPosition:position];

@@ -366,23 +366,13 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     }
 }
 
-- (void)notifyWantsToScrollToItemAtIndexPath:(NSIndexPath *)indexPath scrollPosition:(UICollectionViewScrollPosition)position
+- (void)notifyWantsToScrollToItemAtIndexPath:(NSIndexPath *)indexPath scrollPosition:(UICollectionViewScrollPosition)position animated:(BOOL)animated completion:(void(^)(UICollectionViewCell *))completion
 {
     KOMOOT_ASSERT_MAIN_THREAD;
     
     id<KMCollectionViewDataSourceDelegate> delegate = self.delegate;
-    if ([delegate respondsToSelector:@selector(dataSource:wantsToScrollToItemAtIndexPath:scrollPosition:)]) {
-        [delegate dataSource:self wantsToScrollToItemAtIndexPath:indexPath scrollPosition:position];
-    }
-}
-
-- (void)notifyWantsToScrollToItemAtIndexPath:(NSIndexPath *)indexPath scrollPosition:(UICollectionViewScrollPosition)position completion:(void(^)(UICollectionViewCell *))completion
-{
-    KOMOOT_ASSERT_MAIN_THREAD;
-    
-    id<KMCollectionViewDataSourceDelegate> delegate = self.delegate;
-    if ([delegate respondsToSelector:@selector(dataSource:wantsToScrollToItemAtIndexPath:scrollPosition:completion:)]) {
-        [delegate dataSource:self wantsToScrollToItemAtIndexPath:indexPath scrollPosition:position completion:completion];
+    if ([delegate respondsToSelector:@selector(dataSource:wantsToScrollToItemAtIndexPath:scrollPosition:animated:completion:)]) {
+        [delegate dataSource:self wantsToScrollToItemAtIndexPath:indexPath scrollPosition:position animated:animated completion:completion];
     }
 }
 

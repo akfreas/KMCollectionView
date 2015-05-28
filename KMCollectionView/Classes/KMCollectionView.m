@@ -340,11 +340,11 @@ static __weak id currentFirstResponder;
     self.wantsContentOffsetUpdates = wantsUpdateValue;
 }
 
-- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToScrollToItemAtIndexPath:(NSIndexPath *)indexPath scrollPosition:(UICollectionViewScrollPosition)position
+- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToScrollToItemAtIndexPath:(NSIndexPath *)indexPath scrollPosition:(UICollectionViewScrollPosition)position animated:(BOOL)animated
 {
     
     dispatch_block_t update = ^{
-        [self scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:YES];
+        [self scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:animated];
     };
     
     if (self.shouldUpdateContentOffset) {
@@ -354,15 +354,22 @@ static __weak id currentFirstResponder;
     }
 }
 
-- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToScrollToItemAtIndexPath:(NSIndexPath *)indexPath scrollPosition:(UICollectionViewScrollPosition)position completion:(void(^)(UICollectionViewCell *))completion
+- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToScrollToItemAtIndexPath:(NSIndexPath *)indexPath scrollPosition:(UICollectionViewScrollPosition)position animated:(BOOL)animated completion:(void(^)(UICollectionViewCell *))completion
 {
     __weak typeof(&*self) weakSelf = self;
     dispatch_block_t update = ^{
-        [weakSelf scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:YES];
-        [weakSelf enqueueScrollViewActionCompletionBlock:^{
-            UICollectionViewCell *cell = [weakSelf cellForItemAtIndexPath:indexPath];
-            completion(cell);
-        }];
+        [weakSelf scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:animated];
+        if (completion) {
+            if (animated == NO) {
+                UICollectionViewCell *cell = [weakSelf cellForItemAtIndexPath:indexPath];
+                completion(cell);
+            } else {
+                [weakSelf enqueueScrollViewActionCompletionBlock:^{
+                    UICollectionViewCell *cell = [weakSelf cellForItemAtIndexPath:indexPath];
+                        completion(cell);
+                }];
+            }
+        }
     };
     
     if (self.shouldUpdateContentOffset) {
