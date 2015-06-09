@@ -326,7 +326,6 @@ static __weak id currentFirstResponder;
             complete();
         }
         [self.collectionViewLayout invalidateLayout];
-        [self reloadData];
     }];
 }
 
