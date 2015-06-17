@@ -14,12 +14,12 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - Expecta (0.3.2)
-  - KMCollectionView (0.1.0):
+  - Expecta (1.0.0)
+  - KMCollectionView (0.2.1):
     - BlocksKit (~> 2.2)
     - PureLayout (~> 2.0)
-  - PureLayout (2.0.5)
-  - Specta (0.3.2)
+  - PureLayout (2.0.6)
+  - Specta (1.0.1)
 
 DEPENDENCIES:
   - Expecta
@@ -32,9 +32,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
-  Expecta: 8c507baf13211207b1e9d0a741480600e6b4ed15
-  KMCollectionView: 0771d77316b4b2a5d388336a24bb5d56f9a9f44d
-  PureLayout: a0fe75f1cf485801e7e00b723b8a3c32dca558e2
-  Specta: e5ad38f1b2227a23bc63d0b5a3b41c5e628f2851
+  Expecta: 32604574add2c46a36f8d2f716b6c5736eb75024
+  KMCollectionView: 7b0e9c2c097dc8e24952c1916110afa777ee2c15
+  PureLayout: f25f0bb904d5ccfe6e31da3cb869185259f02e0d
+  Specta: 097be314a75de103703a3bf9a529dc1a398509d7
 
-COCOAPODS: 0.36.3
+COCOAPODS: 0.37.2

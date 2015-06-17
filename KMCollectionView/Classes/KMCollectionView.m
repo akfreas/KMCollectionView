@@ -27,10 +27,20 @@ static __weak id currentFirstResponder;
 @property (nonatomic) UIGestureRecognizer *tapToExitGesture;
 @property (nonatomic) void *KMCollectionViewKVOContext;
 @property (nonatomic, weak) id<UICollectionViewDelegate> forwardingDelegate;
+@property (nonatomic) NSMutableDictionary *contentOffsetObservers;
 @end
 
 
 @implementation KMCollectionView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.reactToKeyboard = YES;
+    }
+    return self;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout
 {
@@ -41,6 +51,7 @@ static __weak id currentFirstResponder;
         self.defaultDataManager = [KMCollectionViewDataManager new];
         self.pagingEnabled = NO;
         self.forwardingDelegate = self.defaultDataManager;
+        self.reactToKeyboard = YES;
         self.delegate = self;
         [self addLifetimeObservers];
     }
@@ -106,6 +117,9 @@ static __weak id currentFirstResponder;
 
 - (void)addTapGesture
 {
+    if (self.reactToKeyboard == NO) {
+        return;
+    }
     if (self.tapToExitGesture != nil) {
         return;
     }
@@ -121,6 +135,24 @@ static __weak id currentFirstResponder;
         [self removeGestureRecognizer:self.tapToExitGesture];
         self.tapToExitGesture = nil;
     }
+}
+
+- (void)addContentOffsetObserver:(void (^)(CGPoint))observer forKey:(NSString *)key
+{
+    self.contentOffsetObservers[key] = observer;
+}
+
+- (void)removeContentOffsetObserverForKey:(NSString *)key
+{
+    [self.contentOffsetObservers removeObjectForKey:key];
+}
+
+- (NSMutableDictionary *)contentOffsetObservers
+{
+    if (_contentOffsetObservers == nil) {
+        _contentOffsetObservers = [NSMutableDictionary new];
+    }
+    return _contentOffsetObservers;
 }
 
 #pragma mark - Private Methods
@@ -169,6 +201,9 @@ static __weak id currentFirstResponder;
 
 - (void)contentOffsetChanged
 {
+    for (void(^block)(CGPoint) in [self.contentOffsetObservers allValues]) {
+        block(self.contentOffset);
+    }
     /* If we are setting the content offset manually, we want to disable
      the action of content offset updates. This should only get triggered
      when the user touches the scroll view and scrolls or some other content
@@ -193,7 +228,9 @@ static __weak id currentFirstResponder;
 
 - (void)addTransientObservers
 {
-    
+    if (self.reactToKeyboard == NO) {
+        return;
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustCollectionViewContentForKeyboardNotif:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustCollectionViewContentForKeyboardNotif:) name:UIKeyboardWillHideNotification object:nil];
     
