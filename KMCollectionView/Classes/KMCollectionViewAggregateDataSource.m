@@ -14,9 +14,22 @@
 
 - (void)addDatasource:(KMCollectionViewDataSource *)dataSource forGlobalSection:(NSInteger)section
 {
+    [self addDatasource:dataSource forGlobalSection:section notifyBatchUpdate:NO];
+}
+
+- (void)addDatasource:(KMCollectionViewDataSource *)dataSource forGlobalSection:(NSInteger)section notifyBatchUpdate:(BOOL)notify
+{
     dataSource.delegate = self;
     dataSource.cancelationID = self.cancelationID;
-    self.dataSources[@(section)] = dataSource;
+    void(^block)() = ^{
+        self.dataSources[@(section)] = dataSource;
+        
+    };
+    if (notify) {
+        [self notifySectionsInsertedAtIndexSet:[NSIndexSet indexSetWithIndex:section]];
+    } else {
+        block();
+    }
 }
 
 - (void)insertDatasource:(KMCollectionViewDataSource *)dataSource forGlobalSection:(NSInteger)section
@@ -39,7 +52,7 @@
     }];
 }
 
-- (void)removeDatasourceForGlobalSection:(NSInteger)section
+- (void)removeDatasourceForGlobalSection:(NSInteger)section notifyBatchUpdate:(BOOL)notify
 {
     NSMutableDictionary *newDatasourceMapping = [NSMutableDictionary dictionary];
     KMCollectionViewDataSource *datasource = self.dataSources[@(section)];
@@ -53,13 +66,18 @@
             [newDatasourceMapping setObject:self.dataSources[number] forKey:[NSNumber numberWithUnsignedInteger:[number unsignedIntegerValue]-1]];
         }
     }
-    [self notifyBatchUpdate:^{
+    void(^updateBlock)() = ^{
         self.dataSources = newDatasourceMapping;
         [self notifySectionsRemovedAtIndexSet:[NSIndexSet indexSetWithIndex:section]];
-    }];
+    };
+    if (notify) {
+        [self notifyBatchUpdate:updateBlock];
+    } else {
+        updateBlock();
+    }
 }
 
-- (void)removeDatasource:(KMCollectionViewDataSource *)dataSource
+- (void)removeDatasource:(KMCollectionViewDataSource *)dataSource notifyBatchUpdate:(BOOL)notify
 {
     __block NSNumber *section = nil;
     [self.dataSources enumerateKeysAndObjectsUsingBlock:^(NSNumber *dsSection, KMCollectionViewDataSource *existingDS, BOOL *stop) {
@@ -69,7 +87,7 @@
         }
     }];
     if (section != nil) {
-        [self removeDatasourceForGlobalSection:[section integerValue]];
+        [self removeDatasourceForGlobalSection:[section integerValue] notifyBatchUpdate:notify];
     }
 }
 
