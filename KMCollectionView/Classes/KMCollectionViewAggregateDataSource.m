@@ -351,4 +351,9 @@
     [self.delegate dataSource:self wantsToScrollToSupplementaryView:view scrollPosition:position completion:completion];
 }
 
+- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToScrollToItemAtIndexPath:(NSIndexPath *)indexPath scrollPosition:(UICollectionViewScrollPosition)position animated:(BOOL)animated completion:(void (^)(UICollectionViewCell *))completion
+{
+    [self.delegate dataSource:self wantsToScrollToItemAtIndexPath:[self globalIndexPath:indexPath forIndexPathFromDataSource:dataSource] scrollPosition:position animated:animated completion:completion];
+}
+
 @end
