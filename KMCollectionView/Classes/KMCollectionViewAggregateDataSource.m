@@ -77,6 +77,11 @@
     }
 }
 
+- (void)removeDatasource:(KMCollectionViewDataSource *)dataSource
+{
+    [self removeDatasource:dataSource notifyBatchUpdate:YES];
+}
+
 - (void)removeDatasource:(KMCollectionViewDataSource *)dataSource notifyBatchUpdate:(BOOL)notify
 {
     __block NSNumber *section = nil;
