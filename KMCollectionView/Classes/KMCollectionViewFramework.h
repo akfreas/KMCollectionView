@@ -14,3 +14,4 @@
 #import "KMCollectionViewSelectionDataManager.h"
 #import "KMCollectionView.h"
 #import "KMCollectionViewCell.h"
+#import "KMCollectionViewFlowLayout.h"
