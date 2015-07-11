@@ -33,6 +33,8 @@ static __weak id currentFirstResponder;
 
 @implementation KMCollectionView
 
+#pragma mark Public Methods
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -66,6 +68,14 @@ static __weak id currentFirstResponder;
         self.forwardingDelegate = delegate;
     }
 }
+
+- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated completion:(void(^)())completion
+{
+    [self enqueueScrollViewActionCompletionBlock:completion];
+    [self setContentOffset:contentOffset animated:animated];
+}
+
+#pragma mark - Private Methods
 
 - (void)dealloc
 {
@@ -154,8 +164,6 @@ static __weak id currentFirstResponder;
     }
     return _contentOffsetObservers;
 }
-
-#pragma mark - Private Methods
 
 
 #pragma mark Forwarding Methods
