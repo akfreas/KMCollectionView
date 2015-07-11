@@ -96,6 +96,20 @@
     }
 }
 
+- (void)removeAllDataSourcesWithBatchUpdate:(BOOL)notify
+{
+    dispatch_block_t block = ^{
+        [self.dataSources enumerateKeysAndObjectsUsingBlock:^(NSNumber *dsSection, KMCollectionViewDataSource *existingDS, BOOL *stop) {
+            [self removeDatasourceForGlobalSection:[dsSection integerValue] notifyBatchUpdate:NO];
+        }];
+    };
+    if (notify == YES) {
+        [self notifyBatchUpdate:block];
+    } else {
+        block();
+    }
+}
+
 - (NSInteger)globalSectionForDatasourceClass:(Class)dataSourceClass
 {
     NSInteger globalSection = NSNotFound;
