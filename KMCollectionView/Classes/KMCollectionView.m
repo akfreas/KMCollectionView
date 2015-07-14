@@ -538,11 +538,6 @@ static __weak id currentFirstResponder;
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRemoveSectionAtIndexSet:(NSIndexSet *)indexSet
 {
-    [self performBatchUpdates:^{
-        [self deleteSections:indexSet];
-    } completion:^(BOOL finished) {
-        [self.collectionViewLayout invalidateLayout];
-        [self reloadData];
-    }];
+    [self deleteSections:indexSet];
 }
 @end

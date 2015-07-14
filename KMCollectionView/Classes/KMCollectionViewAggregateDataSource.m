@@ -98,16 +98,15 @@
 
 - (void)removeAllDataSourcesWithBatchUpdate:(BOOL)notify
 {
-    dispatch_block_t block = ^{
+    __block dispatch_block_t block = ^{};
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
         [self.dataSources enumerateKeysAndObjectsUsingBlock:^(NSNumber *dsSection, KMCollectionViewDataSource *existingDS, BOOL *stop) {
-            [self removeDatasourceForGlobalSection:[dsSection integerValue] notifyBatchUpdate:NO];
+            [indexSet addIndex:[dsSection integerValue]];
         }];
-    };
-    if (notify == YES) {
-        [self notifyBatchUpdate:block];
-    } else {
-        block();
-    }
+    [self notifyBatchUpdate:^{
+        self.dataSources = [NSMutableDictionary new];
+        [self notifySectionsRemovedAtIndexSet:indexSet];
+    }];
 }
 
 - (NSInteger)globalSectionForDatasourceClass:(Class)dataSourceClass
