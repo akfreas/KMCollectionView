@@ -276,12 +276,17 @@
     }
 }
 
+- (NSInteger)numberOfSections
+{
+   return [[self.dataSources allKeys] count];
+}
+
 
 #pragma mark UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return [[self.dataSources allKeys] count];
+    return [self numberOfSections];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

@@ -2,6 +2,7 @@
 
 @interface KMCollectionViewAggregateDataSource : KMCollectionViewDataSource
 
+- (NSInteger)numberOfSections;
 - (NSInteger)globalSectionForDatasourceClass:(Class)dataSourceClass;
 - (void)addDatasource:(KMCollectionViewDataSource *)dataSource forGlobalSection:(NSInteger)section;
 - (void)addDatasource:(KMCollectionViewDataSource *)dataSource forGlobalSection:(NSInteger)section notifyBatchUpdate:(BOOL)notify;
