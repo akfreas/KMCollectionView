@@ -501,6 +501,7 @@ static __weak id currentFirstResponder;
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didReloadSections:(NSIndexSet *)sections
 {
+    [dataSource registerReusableViewsWithCollectionView:self];
     [self reloadSections:sections];
 }
 
