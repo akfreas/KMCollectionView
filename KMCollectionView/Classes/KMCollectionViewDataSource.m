@@ -373,6 +373,8 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     id<KMCollectionViewDataSourceDelegate> delegate = self.delegate;
     if ([delegate respondsToSelector:@selector(dataSource:wantsToScrollToItemAtIndexPath:scrollPosition:animated:completion:)]) {
         [delegate dataSource:self wantsToScrollToItemAtIndexPath:indexPath scrollPosition:position animated:animated completion:completion];
+    } else {
+        completion(nil);
     }
 }
 
