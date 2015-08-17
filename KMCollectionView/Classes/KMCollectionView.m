@@ -526,14 +526,8 @@ static __weak id currentFirstResponder;
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didInsertSectionAtIndexSet:(NSIndexSet *)indexSet
 {
-    [self performBatchUpdates:^{
-        [dataSource registerReusableViewsWithCollectionView:self];
-        [self insertSections:indexSet];
-    } completion:^(BOOL finished) {
-        [self.collectionViewLayout invalidateLayout];
-        [self reloadData];
-    }];
-    
+    [dataSource registerReusableViewsWithCollectionView:self];
+    [self insertSections:indexSet];
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRemoveSectionAtIndexSet:(NSIndexSet *)indexSet
