@@ -14,22 +14,10 @@
 
 - (void)addDatasource:(KMCollectionViewDataSource *)dataSource forGlobalSection:(NSInteger)section
 {
-    [self addDatasource:dataSource forGlobalSection:section notifyBatchUpdate:NO];
-}
-
-- (void)addDatasource:(KMCollectionViewDataSource *)dataSource forGlobalSection:(NSInteger)section notifyBatchUpdate:(BOOL)notify
-{
     dataSource.delegate = self;
     dataSource.cancelationID = self.cancelationID;
-    void(^block)() = ^{
-        self.dataSources[@(section)] = dataSource;
-        
-    };
-    if (notify) {
-        [self notifySectionsInsertedAtIndexSet:[NSIndexSet indexSetWithIndex:section]];
-    } else {
-        block();
-    }
+    self.dataSources[@(section)] = dataSource;
+    [self notifySectionsInsertedAtIndexSet:[NSIndexSet indexSetWithIndex:section]];
 }
 
 - (void)insertDatasource:(KMCollectionViewDataSource *)dataSource forGlobalSection:(NSInteger)section
