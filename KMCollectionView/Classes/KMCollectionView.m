@@ -60,6 +60,13 @@ static __weak id currentFirstResponder;
     return self;
 }
 
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    for (void(^block)(CGPoint) in [self.contentOffsetObservers allValues]) {
+        block(*targetContentOffset);
+    }
+}
+
 - (void)setDelegate:(id<UICollectionViewDelegate>)delegate
 {
     if (delegate == self) {
@@ -209,9 +216,6 @@ static __weak id currentFirstResponder;
 
 - (void)contentOffsetChanged
 {
-    for (void(^block)(CGPoint) in [self.contentOffsetObservers allValues]) {
-        block(self.contentOffset);
-    }
     /* If we are setting the content offset manually, we want to disable
      the action of content offset updates. This should only get triggered
      when the user touches the scroll view and scrolls or some other content
