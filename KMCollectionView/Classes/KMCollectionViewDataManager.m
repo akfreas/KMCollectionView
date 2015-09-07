@@ -45,13 +45,13 @@ static NSString *kItemCountKey = @"itemCount";
         self.managedDataMap[@(indexPath.section)] = [NSMutableDictionary dictionary];
     }
     
-    NSMutableDictionary *itemAtIndexPath = self.managedDataMap[@(indexPath.section)][@(indexPath.row)];
+    NSMutableDictionary *itemAtIndexPath = self.managedDataMap[@(indexPath.section)][@(indexPath.item)];
     if (itemAtIndexPath == nil) {
         [self willChangeValueForKey:kItemCountKey];
-        self.managedDataMap[@(indexPath.section)][@(indexPath.row)] = data;
+        self.managedDataMap[@(indexPath.section)][@(indexPath.item)] = data;
         [self didChangeValueForKey:kItemCountKey];
     } else {
-        self.managedDataMap[@(indexPath.section)][@(indexPath.row)] = data;
+        self.managedDataMap[@(indexPath.section)][@(indexPath.item)] = data;
     }
 }
 
@@ -75,9 +75,9 @@ static NSString *kItemCountKey = @"itemCount";
 
 - (void)removeManagedDataAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.managedDataMap[@(indexPath.section)][@(indexPath.row)] != nil) {
+    if (self.managedDataMap[@(indexPath.section)][@(indexPath.item)] != nil) {
         [self willChangeValueForKey:kItemCountKey];
-        [self.managedDataMap[@(indexPath.section)] removeObjectForKey:@(indexPath.row)];
+        [self.managedDataMap[@(indexPath.section)] removeObjectForKey:@(indexPath.item)];
         [self didChangeValueForKey:kItemCountKey];
     }
 }

@@ -4,7 +4,7 @@
 
 + (NSIndexPath *)mappedIndexPathForGlobalIndexPath:(NSIndexPath *)indexPath
 {
-    NSIndexPath *mapped = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
+    NSIndexPath *mapped = [NSIndexPath indexPathForRow:indexPath.item inSection:0];
     return mapped;
 }
 @end

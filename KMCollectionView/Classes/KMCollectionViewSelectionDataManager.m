@@ -51,24 +51,27 @@ static NSString *kSelectedItemCountKey = @"selectedItemCount";
     if (selectionAtSection == nil) {
         self.dataSelection[@(indexPath.section)] = [NSMutableDictionary dictionary];
     }
-    id selection = self.managedDataMap[@(indexPath.section)][@(indexPath.row)];
+    id selection = self.managedDataMap[@(indexPath.section)][@(indexPath.item)];
+    if (selection == nil) {
+        return
+    }
     [self willChangeValueForKey:kSelectedItemCountKey];
-    self.dataSelection[@(indexPath.section)][@(indexPath.row)] = selection;
+    self.dataSelection[@(indexPath.section)][@(indexPath.item)] = selection;
     [self didChangeValueForKey:kSelectedItemCountKey];
 }
 
 - (void)deselectDataAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataSelection[@(indexPath.section)][@(indexPath.row)] != nil) {
+    if (self.dataSelection[@(indexPath.section)][@(indexPath.item)] != nil) {
         [self willChangeValueForKey:kSelectedItemCountKey];
-        [self.dataSelection[@(indexPath.section)] removeObjectForKey:@(indexPath.row)];
+        [self.dataSelection[@(indexPath.section)] removeObjectForKey:@(indexPath.item)];
         [self didChangeValueForKey:kSelectedItemCountKey];
     }
 }
 
 - (BOOL)dataExistsAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.managedDataMap[@(indexPath.section)][@(indexPath.row)] != nil  ) {
+    if (self.managedDataMap[@(indexPath.section)][@(indexPath.item)] != nil  ) {
         return YES;
     }
     return NO;
@@ -76,7 +79,7 @@ static NSString *kSelectedItemCountKey = @"selectedItemCount";
 
 - (BOOL)dataIsSelectedAtIndexPath:(NSIndexPath *)indexPath
 {
-    id selection = self.dataSelection[@(indexPath.section)][@(indexPath.row)];
+    id selection = self.dataSelection[@(indexPath.section)][@(indexPath.item)];
     if (selection == nil) {
         return NO;
     }

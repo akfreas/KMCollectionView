@@ -159,7 +159,7 @@
 - (NSIndexPath *)globalIndexPath:(NSIndexPath *)indexPath forIndexPathFromDataSource:(KMCollectionViewDataSource *)dataSource
 {
     NSInteger globalSectionNumber = [self globalSectionForLocalSection:indexPath.section fromDataSource:dataSource];
-    NSIndexPath *mappedIndexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:globalSectionNumber];
+    NSIndexPath *mappedIndexPath = [NSIndexPath indexPathForItem:indexPath.item inSection:globalSectionNumber];
     return mappedIndexPath;
 }
 
