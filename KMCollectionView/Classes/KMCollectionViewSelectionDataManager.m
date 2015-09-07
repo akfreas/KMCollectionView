@@ -53,7 +53,7 @@ static NSString *kSelectedItemCountKey = @"selectedItemCount";
     }
     id selection = self.managedDataMap[@(indexPath.section)][@(indexPath.item)];
     if (selection == nil) {
-        return
+        return;
     }
     [self willChangeValueForKey:kSelectedItemCountKey];
     self.dataSelection[@(indexPath.section)][@(indexPath.item)] = selection;
