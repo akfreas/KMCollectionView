@@ -301,6 +301,10 @@ static __weak id currentFirstResponder;
         [self addTapGesture];
     }
     UIResponder *currentResponder = [UIResponder currentFirstResponder];
+    if ([currentResponder isKindOfClass:[UIView class]] == NO) {
+        return;
+    }
+
     UIView *currentView = (UIView *)currentResponder;
     NSIndexPath *idx;
     while (currentView != nil && currentView != self) {
