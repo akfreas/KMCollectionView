@@ -266,7 +266,8 @@
 
 - (NSInteger)numberOfSections
 {
-   return [[self.dataSources allKeys] count];
+    NSInteger count = [[self.dataSources allKeys] count];
+    return count;
 }
 
 
@@ -311,24 +312,24 @@
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didInsertItemsAtIndexPaths:(NSArray *)indexPaths
 {
-    [self notifyItemsInsertedAtIndexPaths:[self mappedIndexPathsForIndexPaths:indexPaths fromDataSource:dataSource]];
+    [self notifyItemsWereInsertedAtIndexPaths:[self mappedIndexPathsForIndexPaths:indexPaths fromDataSource:dataSource]];
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRefreshItemsAtIndexPaths:(NSArray *)indexPaths
 {
-    [self notifyItemsRefreshedAtIndexPaths:[self mappedIndexPathsForIndexPaths:indexPaths fromDataSource:dataSource]];
+    [self notifyItemsWereRefreshedAtIndexPaths:[self mappedIndexPathsForIndexPaths:indexPaths fromDataSource:dataSource]];
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRemoveItemsAtIndexPaths:(NSArray *)indexPaths
 {
-    [self notifyItemsRemovedAtIndexPaths:[self mappedIndexPathsForIndexPaths:indexPaths fromDataSource:dataSource]];
+    [self notifyItemsWereRemovedAtIndexPaths:[self mappedIndexPathsForIndexPaths:indexPaths fromDataSource:dataSource]];
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didMoveItemAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)newIndexPath
 {
     NSIndexPath *mappedFromIndexPath = [[self mappedIndexPathsForIndexPaths:@[fromIndexPath] fromDataSource:dataSource] firstObject];
     NSIndexPath *mappedToIndexPath = [[self mappedIndexPathsForIndexPaths:@[newIndexPath] fromDataSource:dataSource] firstObject];
-    [self notifyItemMovedFromIndexPath:mappedFromIndexPath toIndexPath:mappedToIndexPath];
+    [self notifyItemWasMovedFromIndexPath:mappedFromIndexPath toIndexPath:mappedToIndexPath];
 }
 
 - (void)dataSourceDidReloadData:(KMCollectionViewDataSource *)dataSource

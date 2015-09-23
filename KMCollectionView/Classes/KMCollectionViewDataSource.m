@@ -259,13 +259,13 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     }
 }
 
-- (void)notifyItemsInsertedAtIndexPaths:(NSArray *)insertedIndexPaths
+- (void)notifyItemsWereInsertedAtIndexPaths:(NSArray *)insertedIndexPaths
 {
     KOMOOT_ASSERT_MAIN_THREAD;
     if (self.shouldDisplayPlaceholder) {
         __weak typeof(&*self) weakself = self;
         [self enqueuePendingUpdateBlock:^{
-            [weakself notifyItemsInsertedAtIndexPaths:insertedIndexPaths];
+            [weakself notifyItemsWereInsertedAtIndexPaths:insertedIndexPaths];
         }];
         return;
     }
@@ -276,13 +276,13 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     }
 }
 
-- (void)notifyItemsRefreshedAtIndexPaths:(NSArray *)refreshedIndexPaths
+- (void)notifyItemsWereRefreshedAtIndexPaths:(NSArray *)refreshedIndexPaths
 {
     KOMOOT_ASSERT_MAIN_THREAD;
     if (self.shouldDisplayPlaceholder) {
         __weak typeof(&*self) weakself = self;
         [self enqueuePendingUpdateBlock:^{
-            [weakself notifyItemsRefreshedAtIndexPaths:refreshedIndexPaths];
+            [weakself notifyItemsWereRefreshedAtIndexPaths:refreshedIndexPaths];
         }];
         return;
     }
@@ -293,13 +293,13 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     }
 }
 
-- (void)notifyItemsRemovedAtIndexPaths:(NSArray *)removedIndexPaths
+- (void)notifyItemsWereRemovedAtIndexPaths:(NSArray *)removedIndexPaths
 {
     KOMOOT_ASSERT_MAIN_THREAD;
     if (self.shouldDisplayPlaceholder) {
         __weak typeof(&*self) weakself = self;
         [self enqueuePendingUpdateBlock:^{
-            [weakself notifyItemsRemovedAtIndexPaths:removedIndexPaths];
+            [weakself notifyItemsWereRemovedAtIndexPaths:removedIndexPaths];
         }];
         return;
     }
@@ -311,13 +311,13 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
 }
 
 
-- (void)notifyItemMovedFromIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath
+- (void)notifyItemWasMovedFromIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath
 {
     KOMOOT_ASSERT_MAIN_THREAD;
     if (self.shouldDisplayPlaceholder) {
         __weak typeof(&*self) weakself = self;
         [self enqueuePendingUpdateBlock:^{
-            [weakself notifyItemMovedFromIndexPath:indexPath toIndexPath:newIndexPath];
+            [weakself notifyItemWasMovedFromIndexPath:indexPath toIndexPath:newIndexPath];
         }];
         return;
     }

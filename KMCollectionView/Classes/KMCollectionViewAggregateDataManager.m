@@ -119,7 +119,7 @@
         [manager collectionView:collectionView didSelectItemAtIndexPath:mappedIndexPath];
         KMCollectionViewDataSource *dataSource = [self dataSourceForIndexPath:indexPath withCollectionView:collectionView];
         if ([manager collectionView:collectionView shouldRefreshItemAfterSelectionAtIndexPath:mappedIndexPath]) {
-            [dataSource notifyItemsRefreshedAtIndexPaths:@[mappedIndexPath]];
+            [dataSource notifyItemsWereRefreshedAtIndexPaths:@[mappedIndexPath]];
         }
     }
 }

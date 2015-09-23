@@ -20,10 +20,10 @@
 - (void)notifyDidReloadSection:(NSInteger)section;
 - (void)registerReusableViewsWithCollectionView:(UICollectionView *)collectionView NS_REQUIRES_SUPER;
 - (void)updateMappingForGlobalSection:(NSInteger)globalSection;
-- (void)notifyItemsInsertedAtIndexPaths:(NSArray *)insertedIndexPaths;
-- (void)notifyItemsRefreshedAtIndexPaths:(NSArray *)refreshedIndexPaths;
-- (void)notifyItemsRemovedAtIndexPaths:(NSArray *)removedIndexPaths;
-- (void)notifyItemMovedFromIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath;
+- (void)notifyItemsWereInsertedAtIndexPaths:(NSArray *)insertedIndexPaths;
+- (void)notifyItemsWereRefreshedAtIndexPaths:(NSArray *)refreshedIndexPaths;
+- (void)notifyItemsWereRemovedAtIndexPaths:(NSArray *)removedIndexPaths;
+- (void)notifyItemWasMovedFromIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath;
 - (void)notifyBatchUpdate:(dispatch_block_t)update;
 - (void)notifyBatchUpdate:(dispatch_block_t)update complete:(dispatch_block_t)complete;
 - (void)notifyWantsInvalidateLayout;

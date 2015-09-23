@@ -7,7 +7,7 @@
 {
     KMCollectionViewCellMapping *mapping = [KMCollectionViewCellMapping new];
     mapping.identifier = identifier;
-    mapping.cellClass = cellClass;
+    mapping.cellViewClass = cellClass;
     mapping.size = size;
     mapping.options = options;
     mapping.minimumInterItemSpacing = 5.0f;
@@ -16,7 +16,7 @@
 }
 
 - (NSString *)cellClassString {
-    return NSStringFromClass(self.cellClass);
+    return NSStringFromClass(self.cellViewClass);
 }
 
 @end

@@ -177,7 +177,7 @@ static NSString *kItemCountKey = @"itemCount";
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     KMCollectionViewCellMapping *mapping = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellInformationForSectionAtIndex:section];
-    UIEdgeInsets insets = UIEdgeInsetsEqualToEdgeInsets(mapping.edgeInsets, UIEdgeInsetsZero) == NO ? mapping.edgeInsets : UIEdgeInsetsZero;
+    UIEdgeInsets insets = UIEdgeInsetsEqualToEdgeInsets(mapping.sectionEdgeInsets, UIEdgeInsetsZero) == NO ? mapping.sectionEdgeInsets : UIEdgeInsetsZero;
     return insets;
 }
 
@@ -201,11 +201,16 @@ static NSString *kItemCountKey = @"itemCount";
     
     if (mapping.options & KMCollectionViewCellMappingHeightUndefined) {
         cellSize.height = 44.0f;
-    } else if (mapping.options & KMCollectionViewCellMappingSquare) {
+    } else if ((mapping.options & KMCollectionViewCellMappingHeightAsPercentage) == NO && mapping.options & KMCollectionViewCellMappingSquare) {
         cellSize.height = cellSize.width;
     } else if (mapping.options & KMCollectionViewCellMappingHeightAsPercentage) {
         cellSize.height = collectionView.frame.size.height * cellSize.height;
     }
+    
+    if (cellSize.height != 0.0 && mapping.options & KMCollectionViewCellMappingSquare) {
+        cellSize.width = cellSize.height;
+    }
+    
     if (mapping.options & KMCollectionViewCellMappingAutoLayoutSize) {
         UICollectionViewCell *sizingCell = [[NSClassFromString(mapping.cellClassString) alloc] initWithFrame:CGRectZero];
         if ([sizingCell isKindOfClass:[KMCollectionViewCell class]]) {

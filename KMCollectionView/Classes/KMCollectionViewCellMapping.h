@@ -10,9 +10,9 @@ typedef enum : NSUInteger {
 @interface KMCollectionViewCellMapping : NSObject
 
 @property (nonatomic) NSString *identifier;
-@property (nonatomic) Class cellClass;
+@property (nonatomic) Class cellViewClass;
 @property (nonatomic) CGSize size;
-@property (nonatomic) UIEdgeInsets edgeInsets;
+@property (nonatomic) UIEdgeInsets sectionEdgeInsets;
 @property (nonatomic) CGFloat minimumInterItemSpacing;
 @property (nonatomic) CGFloat minimumLineSpacing;
 @property (nonatomic) KMCollectionViewCellMappingOptions options;

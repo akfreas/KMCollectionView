@@ -15,3 +15,4 @@
 #import "KMCollectionView.h"
 #import "KMCollectionViewCell.h"
 #import "KMCollectionViewFlowLayout.h"
+#import "KMCollectionViewLayout.h"
