@@ -86,7 +86,6 @@
 
 - (void)removeAllDataSourcesWithBatchUpdate:(BOOL)notify
 {
-    __block dispatch_block_t block = ^{};
     NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
         [self.dataSources enumerateKeysAndObjectsUsingBlock:^(NSNumber *dsSection, KMCollectionViewDataSource *existingDS, BOOL *stop) {
             [indexSet addIndex:[dsSection integerValue]];
@@ -127,19 +126,6 @@
         _dataSources = [NSMutableDictionary new];
     }
     return _dataSources;
-}
-
-- (NSInteger)localSectionForGlobalSection:(NSInteger)section
-{
-    __block NSInteger runningSections = 0;
-    [self.dataSources enumerateKeysAndObjectsUsingBlock:^(NSNumber *index, KMCollectionViewDataSource *storedDataSource, BOOL *stop) {
-        NSInteger localSectionCount = [storedDataSource numberOfSectionsInCollectionView:nil];
-    }];
-}
-
-- (NSIndexPath *)localIndexPathForGlobalIndexPath:(NSIndexPath *)indexPath
-{
-    
 }
 
 - (NSInteger)globalSectionForLocalSection:(NSInteger)section fromDataSource:(KMCollectionViewDataSource *)dataSource
@@ -357,7 +343,7 @@
     [self.delegate dataSource:self wantsToScrollToSupplementaryViewOfType:type inSection:[self globalSectionForLocalSection:section fromDataSource:dataSource] scrollPosition:position completion:completion];
 }
 
-- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToScrollToSupplementaryView:(UICollectionReusableView *)view scrollPosition:(UICollectionViewScrollDirection)position completion:(void (^)())completion
+- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToScrollToSupplementaryView:(UICollectionReusableView *)view scrollPosition:(UICollectionViewScrollPosition)position completion:(void (^)())completion
 {
     [self.delegate dataSource:self wantsToScrollToSupplementaryView:view scrollPosition:position completion:completion];
 }

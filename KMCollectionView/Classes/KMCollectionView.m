@@ -18,7 +18,7 @@ static __weak id currentFirstResponder;
 
 @end
 
-@interface KMCollectionView () <KMCollectionViewDataSourceDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate>
+@interface KMCollectionView () <KMCollectionViewDataSourceDelegate, UIGestureRecognizerDelegate, UICollectionViewDelegate, UIScrollViewDelegate>
 @property (nonatomic) BOOL wantsContentOffsetUpdates;
 @property (nonatomic) BOOL shouldUpdateContentOffset;
 @property (nonatomic) KMCollectionViewDataManager *defaultDataManager;
@@ -471,7 +471,7 @@ static __weak id currentFirstResponder;
     }
 }
 
-- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToScrollToSupplementaryView:(UICollectionReusableView *)cell scrollPosition:(UICollectionViewScrollDirection)position completion:(void (^)())completion
+- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToScrollToSupplementaryView:(UICollectionReusableView *)cell scrollPosition:(UICollectionViewScrollPosition)position completion:(void (^)())completion
 {
     CGFloat verticalOffset = 30.0;
     void(^update)() = ^{

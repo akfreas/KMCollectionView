@@ -6,7 +6,6 @@
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
 {
-    CGSize collectionViewSize = self.collectionView.bounds.size;
     CGFloat proposedContentOffsetCenterX = proposedContentOffset.x + self.collectionView.bounds.size.width * 0.5f;
     
     CGRect proposedRect = self.collectionView.bounds;
@@ -31,7 +30,7 @@
             continue;
         }
         
-        if (fabsf(attributes.center.x - proposedContentOffsetCenterX) < fabsf(candidateAttributes.center.x - proposedContentOffsetCenterX))
+        if (fabs(attributes.center.x - proposedContentOffsetCenterX) < fabs(candidateAttributes.center.x - proposedContentOffsetCenterX))
         {
             candidateAttributes = attributes;
         }

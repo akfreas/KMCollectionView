@@ -3,8 +3,6 @@
 #import "KMCollectionViewDataSource_private.h"
 #import "KMCollectionViewFlowLayout.h"
 #import "KMCollectionView.h"
-#import <BlocksKit/BlocksKit+UIKit.h>
-
 
 static __weak id currentFirstResponder;
 
@@ -22,11 +20,16 @@ static __weak id currentFirstResponder;
 
 @end
 
-static void * const KMCollectionViewKVOContext = @"KMDataSourceContext";
-
 @implementation KMCollectionViewController
 
-- (instancetype)init
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
+{
+    UICollectionViewFlowLayout *flowLayout = [[KMCollectionViewFlowLayout alloc] init];
+    self = [super initWithCollectionViewLayout:flowLayout];
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     UICollectionViewFlowLayout *flowLayout = [[KMCollectionViewFlowLayout alloc] init];
     self = [super initWithCollectionViewLayout:flowLayout];

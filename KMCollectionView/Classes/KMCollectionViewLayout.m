@@ -31,7 +31,6 @@
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
     NSMutableArray *arr = [NSMutableArray array];
-    NSMutableArray *multiRowAttrs = [NSMutableArray array];
     NSInteger numberOfSections = [self.collectionView numberOfSections];
     for (int section=0; section<numberOfSections; section++) {
         NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:section];
@@ -72,11 +71,6 @@
     return arr;
 }
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
-
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
 {
     KMCollectionViewCellMapping *mapping;
@@ -110,6 +104,7 @@
     } else if (mapping.options & KMCollectionViewCellMappingSquare) {
         cellSize.height = cellSize.width;
     }
+    return cellSize;
 }
 
 @end

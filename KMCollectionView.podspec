@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "KMCollectionView"
-  s.version          = "0.2.1"
+  s.version          = "0.3.0"
   s.summary          = "KMCollectionView is the basis for smooth layouts in the Komoot iOS app."
   s.description      = <<-DESC
                        An optional longer description of KMCollectionView
@@ -23,11 +23,10 @@ Pod::Spec.new do |s|
   s.author           = { "Alexander Freas" => "alex@komoot.de" }
   s.source           = { :git => "https://github.com/komoot/KMCollectionView.git", :tag => s.version.to_s }
 
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '8.0'
   s.requires_arc = true
 
   s.source_files = 'KMCollectionView/Classes/**/*'
   s.frameworks = 'UIKit','Foundation'
-  s.dependency 'PureLayout', '~> 2.0'
-  s.dependency 'BlocksKit', '~> 2.2'
+  s.dependency 'PureLayout', '~> 3.0'
 end

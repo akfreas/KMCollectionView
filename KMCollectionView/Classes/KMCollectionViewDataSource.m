@@ -129,18 +129,6 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     [collectionView registerClass:[KMCollectionViewPlaceholderView class] forSupplementaryViewOfKind:kKMCollectionElementKindPlaceHolder withReuseIdentifier:NSStringFromClass([KMCollectionViewPlaceholderView class])];
 }
 
-- (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForHeaderInSection:(NSInteger)section
-{
-    return nil;
-}
-
-- (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForFooterInSection:(NSInteger)section
-{
-    return nil;
-}
-
-
-
 - (void)updateMappingForGlobalSection:(NSInteger)globalSection
 {
     [NSException raise:KMNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];
@@ -168,6 +156,22 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     [NSException raise:KMNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];
     return nil;
 }
+
+- (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForHeaderInSection:(NSInteger)section
+{
+    return nil;
+}
+
+- (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForFooterInSection:(NSInteger)section
+{
+    return nil;
+}
+
+- (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForSectionAtIndex:(NSInteger)section
+{
+    return nil;
+}
+
 
 - (NSObject *)collectionView:(UICollectionView *)collectionView cellDataForIndexPath:(NSIndexPath *)indexPath
 {
