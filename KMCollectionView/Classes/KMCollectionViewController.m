@@ -22,6 +22,11 @@ static __weak id currentFirstResponder;
 
 @implementation KMCollectionViewController
 
+- (instancetype)init
+{
+    return [self initWithCollectionViewLayout:[UICollectionViewFlowLayout new]];
+}
+
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
 {
     UICollectionViewFlowLayout *flowLayout = [[KMCollectionViewFlowLayout alloc] init];
