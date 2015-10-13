@@ -509,22 +509,42 @@ static __weak id currentFirstResponder;
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didReloadSections:(NSIndexSet *)sections
 {
-    [self reloadSections:sections];
+    @try {
+        [self reloadSections:sections];
+    }
+    @catch (NSException *exception) {
+        [self reloadData];
+    }
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didInsertItemsAtIndexPaths:(NSArray *)indexPaths
 {
-    [self insertItemsAtIndexPaths:indexPaths];
+    @try {
+        [self insertItemsAtIndexPaths:indexPaths];
+    }
+    @catch (NSException *exception) {
+        [self reloadData];
+    }
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRefreshItemsAtIndexPaths:(NSArray *)indexPaths
 {
-    [self reloadItemsAtIndexPaths:indexPaths];
+    @try {
+        [self reloadItemsAtIndexPaths:indexPaths];
+    }
+    @catch (NSException *exception) {
+        [self reloadData];
+    }
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRemoveItemsAtIndexPaths:(NSArray *)indexPaths
 {
-    [self deleteItemsAtIndexPaths:indexPaths];
+    @try {
+        [self deleteItemsAtIndexPaths:indexPaths];
+    }
+    @catch (NSException *exception) {
+        [self reloadData];
+    }
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didMoveItemAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)newIndexPath
