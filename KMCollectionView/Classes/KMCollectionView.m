@@ -410,7 +410,14 @@ static __weak id currentFirstResponder;
 {
     __weak typeof(&*self) weakSelf = self;
     dispatch_block_t update = ^{
-        [weakSelf scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:animated];
+        @try {
+            [weakSelf scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:animated];
+        }
+        @catch (NSException *exception) {
+            if (completion) {
+                completion(nil);
+            }
+        }
         if (completion) {
             if (animated == NO) {
                 UICollectionViewCell *cell = [weakSelf cellForItemAtIndexPath:indexPath];
