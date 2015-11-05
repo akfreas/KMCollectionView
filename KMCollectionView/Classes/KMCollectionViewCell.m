@@ -1,10 +1,13 @@
 #import "KMCollectionViewCell.h"
+#import "KMCellAction.h"
+#import "KMCellActionView.h"
 #import <PureLayout/PureLayout.h>
 NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverrideException";
 
 @interface KMCollectionViewCell ()
 @property (nonatomic) UIView *privateContentView;
 @property (nonatomic) NSLayoutConstraint *contentLeftConstraint;
+@property (nonatomic) KMCellActionView *actionView;
 @end
 
 @implementation KMCollectionViewCell
@@ -34,10 +37,18 @@ NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverri
         [constraints addObject:_contentLeftConstraint];
         
         [contentView addConstraints:constraints];
+        
+        _actionView = [[KMCellActionView alloc] init];
+        [contentView addSubview:_actionView];
 
         contentView.clipsToBounds = YES;
     }
     return self;
+}
+
+- (void)setCellActions:(NSArray *)actions
+{
+    [self.actionView addSubviewsForActions:actions];
 }
 
 - (void)prepareForReuse
@@ -85,6 +96,11 @@ NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverri
 - (void)openActionPane
 {
     _contentLeftConstraint.constant = -70.0;
+    UIView *contentView = [super contentView];
+    [_actionView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:_privateContentView];
+    [_actionView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:contentView];
+    [_actionView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:contentView];
+    [_actionView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:contentView];
     [UIView animateWithDuration:0.2 animations:^{
         [self.contentView layoutIfNeeded];
     }];

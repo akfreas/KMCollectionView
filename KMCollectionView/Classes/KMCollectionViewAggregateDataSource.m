@@ -242,6 +242,12 @@
     return cellData;
 }
 
+- (NSArray<KMCellAction *> *)collectionView:(UICollectionView *)collectionView cellActionForCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    KMCollectionViewDataSource *dataSource = [self datasourceForIndexPath:indexPath];
+    return [dataSource collectionView:collectionView cellActionForCellAtIndexPath:indexPath];
+}
+
 
 - (void)loadContent
 {

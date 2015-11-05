@@ -2,7 +2,7 @@
 #import "KMCollectionViewDataSource_private.h"
 #import "KMCollectionViewDataManager.h"
 #import "KMCollectionViewCell.h"
-
+#import "KMCellAction.h"
 
 static __weak id currentFirstResponder;
 
@@ -48,9 +48,11 @@ static __weak id currentFirstResponder;
     CGPoint position = [gesture locationInView:self];
     NSIndexPath *indexPath = [self indexPathForItemAtPoint:position];
     KMCollectionViewCell *cell = [self cellForItemAtIndexPath:indexPath];
+    NSArray <KMCellAction*> *actions = [(KMCollectionViewDataSource *)self.dataSource collectionView:self cellActionForCellAtIndexPath:indexPath];
     
     switch (gesture.state) {
         case UIGestureRecognizerStateEnded:
+            [cell setCellActions:actions];
             [cell openActionPane];
             break;
             

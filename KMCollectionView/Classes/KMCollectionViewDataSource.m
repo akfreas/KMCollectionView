@@ -134,6 +134,11 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     [NSException raise:KMNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];
 }
 
+- (NSArray<KMCellAction *>* __nullable)collectionView:(UICollectionView * __nonnull)collectionView cellActionForCellAtIndexPath:(NSIndexPath * __nonnull)indexPath
+{
+    return nil;
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [NSException raise:KMNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];

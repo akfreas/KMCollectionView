@@ -1,6 +1,7 @@
 #import "KMCollectionViewSwipeDataSource.h"
 #import <ChameleonFramework/Chameleon.h>
 #import "KMCollectionViewCell.h"
+#import "KMCellAction.h"
 #import <PureLayout/PureLayout.h>
 
 @implementation KMCollectionViewSwipeDataSource
@@ -27,6 +28,11 @@
     return 1;
 }
 
+- (NSArray<KMCellAction *> *)collectionView:(UICollectionView *)collectionView cellActionForCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @[[[KMCellAction alloc] initWithTarget:self action:@selector(deleteButtonTapped) title:@"Delete"]];
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 10;
@@ -37,12 +43,14 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SwipeCell" forIndexPath:indexPath];
     
     UIView *v = [[UILabel alloc] initWithFrame:CGRectZero];
-//    v.backgroundColor = [UIColor purpleColor];
     [cell.contentView addSubview:v];
     [v autoPinEdgesToSuperviewEdges];
-    
-//    cell.contentView.backgroundColor = [UIColor randomFlatColor];
     return cell;
+}
+
+- (void)deleteButtonTapped
+{
+    
 }
 
 @end

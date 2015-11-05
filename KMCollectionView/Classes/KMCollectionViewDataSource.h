@@ -1,6 +1,7 @@
 #import "KMCollectionViewCellMapping.h"
 #import "KMCollectionViewDataManager.h"
 #import "KMCollectionViewContentLoadingInfo.h"
+#import "KMCellAction.h"
 
 @protocol KMCollectionViewDataSourceDelegate;
 
@@ -38,7 +39,7 @@
 - (NSInteger)numberOfSections;
 - (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForIndexPath:(NSIndexPath *)indexPath;
 - (NSObject *)collectionView:(UICollectionView *)collectionView cellDataForIndexPath:(NSIndexPath *)indexPath;
-
+- (NSArray<KMCellAction *>*)collectionView:(UICollectionView * __nonnull)collectionView cellActionForCellAtIndexPath:(NSIndexPath * __nonnull)indexPath;
 - (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForSectionAtIndex:(NSInteger)section;
 - (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForHeaderInSection:(NSInteger)section;
 - (KMCollectionViewCellMapping *)collectionView:(UICollectionView *)collectionView cellInformationForFooterInSection:(NSInteger)section;

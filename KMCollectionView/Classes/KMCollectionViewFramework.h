@@ -5,6 +5,7 @@
 #import "KMCollectionViewAggregateDataSource.h"
 #import "KMCollectionViewDataSource.h"
 #import "KMCollectionViewCellMapping.h"
+#import "KMCellAction.h"
 
 #import "KMCollectionViewController.h"
 
