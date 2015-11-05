@@ -1,4 +1,7 @@
 PODS:
+  - ChameleonFramework (2.0.4):
+    - ChameleonFramework/Default (= 2.0.4)
+  - ChameleonFramework/Default (2.0.4)
   - Expecta (1.0.0)
   - KMCollectionView (0.3.0):
     - PureLayout (~> 3.0)
@@ -6,6 +9,7 @@ PODS:
   - Specta (1.0.1)
 
 DEPENDENCIES:
+  - ChameleonFramework
   - Expecta
   - KMCollectionView (from `../`)
   - Specta
@@ -15,9 +19,10 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
+  ChameleonFramework: 5abe69b1f2a6cc79c3c435fcd9d3d855748225ee
   Expecta: 32604574add2c46a36f8d2f716b6c5736eb75024
   KMCollectionView: 5aa4a12b261084ce89bd75b4bf2e3953e3ddb924
   PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
   Specta: 097be314a75de103703a3bf9a529dc1a398509d7
 
-COCOAPODS: 0.39.0.rc.1
+COCOAPODS: 0.39.0

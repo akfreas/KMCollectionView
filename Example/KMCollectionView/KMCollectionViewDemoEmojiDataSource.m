@@ -23,7 +23,7 @@
 {
     static KMCollectionViewCellMapping *mapping;
     if (mapping == nil) {
-        mapping = [KMCollectionViewCellMapping cellMappingWithIdentifier:@"EmojiCell" cellClass:[KMCollectionViewDemoEmojiCell class] size:CGSizeMake(0.5, 1.0) options:KMCollectionViewCellMappingAutoLayoutSize];
+        mapping = [KMCollectionViewCellMapping cellMappingWithIdentifier:@"EmojiCell" cellClass:[KMCollectionViewDemoEmojiCell class] size:CGSizeMake(40, 40) options:KMCollectionViewCellMappingSquare];
     }
     return mapping;
 }

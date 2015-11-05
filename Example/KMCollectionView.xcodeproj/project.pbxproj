@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		195EF40E1BEA4D10002A8744 /* LaunchStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 195EF40D1BEA4D10002A8744 /* LaunchStoryboard.storyboard */; };
 		1969FF6A1A9A754C008AFABB /* Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 1969FF611A9A754C008AFABB /* Emoji.m */; };
 		1969FF6B1A9A754C008AFABB /* EmojiEmoticons.m in Sources */ = {isa = PBXBuildFile; fileRef = 1969FF631A9A754C008AFABB /* EmojiEmoticons.m */; };
 		1969FF6C1A9A754C008AFABB /* EmojiMapSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 1969FF651A9A754C008AFABB /* EmojiMapSymbols.m */; };
@@ -15,8 +16,10 @@
 		1987A2DC1A97970100EBF3BD /* KMCollectionViewDemoAggregateDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1987A2DB1A97970100EBF3BD /* KMCollectionViewDemoAggregateDataSource.m */; };
 		1987A2DF1A9797E400EBF3BD /* KMCollectionViewDemoEmojiDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1987A2DE1A9797E400EBF3BD /* KMCollectionViewDemoEmojiDataSource.m */; };
 		1987A2E21A97997B00EBF3BD /* KMCollectionViewDemoEmojiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1987A2E11A97997B00EBF3BD /* KMCollectionViewDemoEmojiCell.m */; };
+		19A5318A1BE8FB610062E37A /* KMCollectionViewDemoSwipeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A531891BE8FB610062E37A /* KMCollectionViewDemoSwipeController.m */; };
+		19A5318D1BE8FC540062E37A /* KMCollectionViewSwipeDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A5318C1BE8FC540062E37A /* KMCollectionViewSwipeDataSource.m */; };
 		19A5C7121A97806B006A0BC6 /* KMCollectionViewControllerDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A5C7111A97806B006A0BC6 /* KMCollectionViewControllerDemo.m */; };
-		2A0AE075426B5FC8D0CE6D3A /* libPods-KMCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C6D15493C9A03E05F94FCA /* libPods-KMCollectionView.a */; };
+		36544872751B87853F9242D4 /* Pods_KMCollectionView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE382926074C79478D38E633 /* Pods_KMCollectionView.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -32,7 +35,7 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
-		9A34BD2817185C8D1ADC8C3F /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80E2E9D1316D00129C3A113E /* libPods-Tests.a */; };
+		EE9F5E8203448949ED7F56FC /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F273E571B84E70D098515F44 /* Pods_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		195EF40D1BEA4D10002A8744 /* LaunchStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchStoryboard.storyboard; path = KMCollectionView/LaunchStoryboard.storyboard; sourceTree = "<group>"; };
 		1969FF601A9A754B008AFABB /* Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emoji.h; sourceTree = "<group>"; };
 		1969FF611A9A754C008AFABB /* Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emoji.m; sourceTree = "<group>"; };
 		1969FF621A9A754C008AFABB /* EmojiEmoticons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiEmoticons.h; sourceTree = "<group>"; };
@@ -62,6 +66,10 @@
 		1987A2DE1A9797E400EBF3BD /* KMCollectionViewDemoEmojiDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMCollectionViewDemoEmojiDataSource.m; sourceTree = "<group>"; };
 		1987A2E01A97997B00EBF3BD /* KMCollectionViewDemoEmojiCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMCollectionViewDemoEmojiCell.h; sourceTree = "<group>"; };
 		1987A2E11A97997B00EBF3BD /* KMCollectionViewDemoEmojiCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMCollectionViewDemoEmojiCell.m; sourceTree = "<group>"; };
+		19A531881BE8FB610062E37A /* KMCollectionViewDemoSwipeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMCollectionViewDemoSwipeController.h; sourceTree = "<group>"; };
+		19A531891BE8FB610062E37A /* KMCollectionViewDemoSwipeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMCollectionViewDemoSwipeController.m; sourceTree = "<group>"; };
+		19A5318B1BE8FC540062E37A /* KMCollectionViewSwipeDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMCollectionViewSwipeDataSource.h; sourceTree = "<group>"; };
+		19A5318C1BE8FC540062E37A /* KMCollectionViewSwipeDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMCollectionViewSwipeDataSource.m; sourceTree = "<group>"; };
 		19A5C7101A97806B006A0BC6 /* KMCollectionViewControllerDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMCollectionViewControllerDemo.h; sourceTree = "<group>"; };
 		19A5C7111A97806B006A0BC6 /* KMCollectionViewControllerDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMCollectionViewControllerDemo.m; sourceTree = "<group>"; };
 		25F19B76964810B927ED717E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -86,14 +94,14 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
-		80E2E9D1316D00129C3A113E /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90630F857A2E2C83AA72F00E /* KMCollectionView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = KMCollectionView.podspec; path = ../KMCollectionView.podspec; sourceTree = "<group>"; };
 		959D933BEEADC65D658C8F21 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		9B4EEAF279375981A0903994 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		A6C6D15493C9A03E05F94FCA /* libPods-KMCollectionView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KMCollectionView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4D1EBDF4353A53C19A92536 /* Pods-KMCollectionView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KMCollectionView.release.xcconfig"; path = "Pods/Target Support Files/Pods-KMCollectionView/Pods-KMCollectionView.release.xcconfig"; sourceTree = "<group>"; };
 		B6655F21F9BDB7B4BB174147 /* Pods-KMCollectionView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KMCollectionView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KMCollectionView/Pods-KMCollectionView.debug.xcconfig"; sourceTree = "<group>"; };
+		BE382926074C79478D38E633 /* Pods_KMCollectionView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KMCollectionView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA1894AB672A86916C2C2BBF /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
+		F273E571B84E70D098515F44 /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +112,7 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				2A0AE075426B5FC8D0CE6D3A /* libPods-KMCollectionView.a in Frameworks */,
+				36544872751B87853F9242D4 /* Pods_KMCollectionView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,7 +123,7 @@
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				9A34BD2817185C8D1ADC8C3F /* libPods-Tests.a in Frameworks */,
+				EE9F5E8203448949ED7F56FC /* Pods_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +173,7 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
+				195EF40D1BEA4D10002A8744 /* LaunchStoryboard.storyboard */,
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F593195388D20070C39A /* KMCollectionView */,
 				6003F5B5195388D20070C39A /* Tests */,
@@ -190,8 +199,8 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				A6C6D15493C9A03E05F94FCA /* libPods-KMCollectionView.a */,
-				80E2E9D1316D00129C3A113E /* libPods-Tests.a */,
+				BE382926074C79478D38E633 /* Pods_KMCollectionView.framework */,
+				F273E571B84E70D098515F44 /* Pods_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -205,6 +214,10 @@
 				19A5C7111A97806B006A0BC6 /* KMCollectionViewControllerDemo.m */,
 				1987A2DA1A97970100EBF3BD /* KMCollectionViewDemoAggregateDataSource.h */,
 				1987A2DB1A97970100EBF3BD /* KMCollectionViewDemoAggregateDataSource.m */,
+				19A531881BE8FB610062E37A /* KMCollectionViewDemoSwipeController.h */,
+				19A531891BE8FB610062E37A /* KMCollectionViewDemoSwipeController.m */,
+				19A5318B1BE8FC540062E37A /* KMCollectionViewSwipeDataSource.h */,
+				19A5318C1BE8FC540062E37A /* KMCollectionViewSwipeDataSource.m */,
 				1987A2E31A97998200EBF3BD /* Emoji */,
 				6003F59F195388D20070C39A /* Main_iPhone.storyboard */,
 				6003F5A2195388D20070C39A /* Main_iPad.storyboard */,
@@ -340,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F5A4195388D20070C39A /* Main_iPad.storyboard in Resources */,
+				195EF40E1BEA4D10002A8744 /* LaunchStoryboard.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F5A1195388D20070C39A /* Main_iPhone.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
@@ -458,11 +472,13 @@
 				1969FF6B1A9A754C008AFABB /* EmojiEmoticons.m in Sources */,
 				6003F59E195388D20070C39A /* KMAppDelegate.m in Sources */,
 				1969FF6D1A9A754C008AFABB /* EmojiPictographs.m in Sources */,
+				19A5318A1BE8FB610062E37A /* KMCollectionViewDemoSwipeController.m in Sources */,
 				1987A2E21A97997B00EBF3BD /* KMCollectionViewDemoEmojiCell.m in Sources */,
 				1987A2DF1A9797E400EBF3BD /* KMCollectionViewDemoEmojiDataSource.m in Sources */,
 				6003F5A7195388D20070C39A /* KMViewController.m in Sources */,
 				1969FF6C1A9A754C008AFABB /* EmojiMapSymbols.m in Sources */,
 				1987A2DC1A97970100EBF3BD /* KMCollectionViewDemoAggregateDataSource.m in Sources */,
+				19A5318D1BE8FC540062E37A /* KMCollectionViewSwipeDataSource.m in Sources */,
 				19A5C7121A97806B006A0BC6 /* KMCollectionViewControllerDemo.m in Sources */,
 				1969FF6A1A9A754C008AFABB /* Emoji.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
@@ -601,7 +617,6 @@
 			baseConfigurationReference = B6655F21F9BDB7B4BB174147 /* Pods-KMCollectionView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KMCollectionView/KMCollectionView-Prefix.pch";
 				INFOPLIST_FILE = "KMCollectionView/KMCollectionView-Info.plist";
@@ -617,7 +632,6 @@
 			baseConfigurationReference = B4D1EBDF4353A53C19A92536 /* Pods-KMCollectionView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KMCollectionView/KMCollectionView-Prefix.pch";
 				INFOPLIST_FILE = "KMCollectionView/KMCollectionView-Info.plist";

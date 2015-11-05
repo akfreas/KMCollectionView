@@ -41,9 +41,8 @@
 }
 
 - (void)addLayoutConstraints
-{
-    self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.emoji autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(10.0, 5.0, 10.0, 5.0)];
+{//UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)
+    [self.emoji autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
 }
 
 - (void)configureCellDataWithObject:(NSObject *)object

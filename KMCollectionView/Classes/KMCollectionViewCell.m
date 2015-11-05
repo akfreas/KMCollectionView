@@ -1,8 +1,55 @@
 #import "KMCollectionViewCell.h"
-
+#import <PureLayout/PureLayout.h>
 NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverrideException";
 
+@interface KMCollectionViewCell ()
+@property (nonatomic) UIView *privateContentView;
+@property (nonatomic) NSLayoutConstraint *contentLeftConstraint;
+@end
+
 @implementation KMCollectionViewCell
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        UIView *contentView = [super contentView];
+        _privateContentView = [[UIView alloc] initWithFrame:CGRectZero];
+        contentView.backgroundColor = [UIColor orangeColor];
+        _privateContentView.backgroundColor = [UIColor redColor];
+        [contentView addSubview:_privateContentView];
+        _privateContentView.translatesAutoresizingMaskIntoConstraints = NO;
+
+        NSMutableArray *constraints = [NSMutableArray array];
+
+        [constraints addObject:[NSLayoutConstraint constraintWithItem:_privateContentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+        
+        NSLayoutConstraint *_contentHeightConstraint = [NSLayoutConstraint constraintWithItem:_privateContentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeHeight multiplier:1 constant:0];
+        [constraints addObject:_contentHeightConstraint];
+        
+        NSLayoutConstraint *_contentWidthConstraint = [NSLayoutConstraint constraintWithItem:_privateContentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeWidth multiplier:1 constant:0];
+        [constraints addObject:_contentWidthConstraint];
+        
+        _contentLeftConstraint = [NSLayoutConstraint constraintWithItem:_privateContentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
+        [constraints addObject:_contentLeftConstraint];
+        
+        [contentView addConstraints:constraints];
+
+        contentView.clipsToBounds = YES;
+    }
+    return self;
+}
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    [self.contentView layoutIfNeeded];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+}
 
 - (void)_invalidateCollectionViewLayout
 {
@@ -28,6 +75,19 @@ NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverri
 - (void)configureCellDataWithObject:(NSObject *)object
 {
     [NSException raise:KMCollectionViewCellNeedsOverrideExceptionName format:@"Method: %@", NSStringFromSelector(_cmd)];
+}
+
+- (UIView *)contentView
+{
+    return _privateContentView;
+}
+
+- (void)openActionPane
+{
+    _contentLeftConstraint.constant = -70.0;
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.contentView layoutIfNeeded];
+    }];
 }
 
 - (CGSize)prepreferredLayoutSizeFittingSize:(CGSize)targetSize

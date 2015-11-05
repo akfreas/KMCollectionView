@@ -1,4 +1,4 @@
-#import "KMCollectionViewDataSource.h"
+@import KMCollectionView;
 
 @interface KMCollectionViewDemoEmojiDataSource : KMCollectionViewDataSource
 

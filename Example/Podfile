@@ -1,7 +1,14 @@
+#podfile
 source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '8.0'
+inhibit_all_warnings!
+use_frameworks!
+
 
 target 'KMCollectionView', :exclusive => true do
   pod "KMCollectionView", :path => "../"
+  pod "ChameleonFramework"
 end
 
 target 'Tests', :exclusive => true do

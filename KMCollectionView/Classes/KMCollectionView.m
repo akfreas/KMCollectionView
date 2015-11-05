@@ -1,6 +1,8 @@
 #import "KMCollectionView.h"
 #import "KMCollectionViewDataSource_private.h"
 #import "KMCollectionViewDataManager.h"
+#import "KMCollectionViewCell.h"
+
 
 static __weak id currentFirstResponder;
 
@@ -25,11 +27,42 @@ static __weak id currentFirstResponder;
 @property (nonatomic, copy) void(^pendingContentOffsetUpdateBlocks)();
 @property (nonatomic, copy) void(^pendingScrollViewStateCompletionBlocks)();
 @property (nonatomic) UIGestureRecognizer *tapToExitGesture;
+@property (nonatomic) UISwipeGestureRecognizer *swipeGesture;
 @property (nonatomic) void *KMCollectionViewKVOContext;
 @property (nonatomic, weak) id<UICollectionViewDelegate> forwardingDelegate;
 @property (nonatomic) NSMutableDictionary *contentOffsetObservers;
 @end
 
+
+@interface KMCollectionView (GestureRecognizer)
+
+- (void)handleSwipeGesture:(UIGestureRecognizer *)gesture;
+
+@end
+
+@implementation KMCollectionView (GestureRecognizer)
+
+- (void)handleSwipeGesture:(UIGestureRecognizer *)gesture
+{
+    
+    CGPoint position = [gesture locationInView:self];
+    NSIndexPath *indexPath = [self indexPathForItemAtPoint:position];
+    KMCollectionViewCell *cell = [self cellForItemAtIndexPath:indexPath];
+    
+    switch (gesture.state) {
+        case UIGestureRecognizerStateEnded:
+            [cell openActionPane];
+            break;
+            
+        case UIGestureRecognizerStateChanged:
+            
+            break;
+        default:
+            break;
+    }
+}
+
+@end
 
 @implementation KMCollectionView
 
@@ -52,6 +85,9 @@ static __weak id currentFirstResponder;
         self.shouldUpdateContentOffset = YES;
         self.defaultDataManager = [KMCollectionViewDataManager new];
         self.pagingEnabled = NO;
+        _swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
+        _swipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+        [self addGestureRecognizer:_swipeGesture];
         self.forwardingDelegate = self.defaultDataManager;
         self.reactToKeyboard = YES;
         self.delegate = self;

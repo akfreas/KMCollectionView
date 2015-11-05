@@ -5,3 +5,7 @@
 
 - (CGSize)prepreferredLayoutSizeFittingSize:(CGSize)targetSize;
 @end
+
+@interface KMCollectionViewCell (Private)
+- (void)openActionPane;
+@end
