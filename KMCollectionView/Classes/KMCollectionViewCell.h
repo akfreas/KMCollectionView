@@ -9,6 +9,9 @@
 @end
 
 @interface KMCollectionViewCell (Private)
-- (void)openActionPane;
+
+- (void)openActionPaneWithActions:(NSArray<KMCellAction *>*)actions;
 - (void)setCellActions:(NSArray<KMCellAction *>*)actions;
+- (void)closeActionPane;
+
 @end

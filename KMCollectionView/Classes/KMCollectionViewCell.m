@@ -18,8 +18,6 @@ NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverri
     if (self) {
         UIView *contentView = [super contentView];
         _privateContentView = [[UIView alloc] initWithFrame:CGRectZero];
-        contentView.backgroundColor = [UIColor orangeColor];
-        _privateContentView.backgroundColor = [UIColor redColor];
         [contentView addSubview:_privateContentView];
         _privateContentView.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -93,16 +91,43 @@ NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverri
     return _privateContentView;
 }
 
-- (void)openActionPane
+- (void)closeActionPane
 {
-    _contentLeftConstraint.constant = -70.0;
+    _contentLeftConstraint.constant = 0.0;
     UIView *contentView = [super contentView];
+
+    [UIView animateWithDuration:0.2 animations:^{
+        [contentView layoutSubviews];
+    } completion:^(BOOL finished) {
+        [self removeConstraintsRelatedToView:_actionView];
+        [contentView layoutSubviews];
+    }];
+    
+}
+
+- (void)removeConstraintsRelatedToView:(UIView *)view
+{
+    for (NSLayoutConstraint *constraint in self.constraints) {
+        if (constraint.firstItem == view || constraint.secondItem == view) {
+            [self removeConstraint:constraint];
+        }
+    }
+}
+
+- (void)openActionPaneWithActions:(NSArray<KMCellAction *>*)actions
+{
+    CGFloat drawerSize = 70.0 * [actions count];
+    _contentLeftConstraint.constant = -drawerSize;
+
+    UIView *contentView = [super contentView];
+    contentView.clipsToBounds = NO;
     [_actionView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:_privateContentView];
     [_actionView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:contentView];
-    [_actionView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:contentView];
+    [_actionView autoSetDimension:ALDimensionWidth toSize:drawerSize];
     [_actionView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:contentView];
+    [_actionView layoutIfNeeded];
     [UIView animateWithDuration:0.2 animations:^{
-        [self.contentView layoutIfNeeded];
+        [contentView layoutIfNeeded];
     }];
 }
 

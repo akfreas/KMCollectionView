@@ -31,6 +31,7 @@ static __weak id currentFirstResponder;
 @property (nonatomic) void *KMCollectionViewKVOContext;
 @property (nonatomic, weak) id<UICollectionViewDelegate> forwardingDelegate;
 @property (nonatomic) NSMutableDictionary *contentOffsetObservers;
+@property (nonatomic) KMCollectionViewCell *editingCell;
 @end
 
 
@@ -44,16 +45,22 @@ static __weak id currentFirstResponder;
 
 - (void)handleSwipeGesture:(UIGestureRecognizer *)gesture
 {
-    
     CGPoint position = [gesture locationInView:self];
     NSIndexPath *indexPath = [self indexPathForItemAtPoint:position];
     KMCollectionViewCell *cell = [self cellForItemAtIndexPath:indexPath];
     NSArray <KMCellAction*> *actions = [(KMCollectionViewDataSource *)self.dataSource collectionView:self cellActionForCellAtIndexPath:indexPath];
+    [self.editingCell closeActionPane];
+    
+    if (actions == nil) {
+        self.editingCell = nil;
+        return;
+    }
+    self.editingCell = cell;
     
     switch (gesture.state) {
         case UIGestureRecognizerStateEnded:
             [cell setCellActions:actions];
-            [cell openActionPane];
+            [cell openActionPaneWithActions:actions];
             break;
             
         case UIGestureRecognizerStateChanged:
@@ -317,6 +324,7 @@ static __weak id currentFirstResponder;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self contentOffsetChanged];
+    [self.editingCell closeActionPane];
 }
 
 - (void)removeNotificationObservers
