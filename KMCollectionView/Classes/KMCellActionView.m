@@ -3,10 +3,22 @@
 
 
 @interface KMCellActionView ()
-@property (nonatomic) NSArray <UIButton *> *buttons;
+@property (nonatomic, nullable) NSArray <UIButton *> *buttons;
+@property (nonatomic, nonnull) UICollectionViewCell *cell;
 @end
 
 @implementation KMCellActionView
+
+
+- (id)initWithCell:(UICollectionViewCell *)cell
+{
+    self = [self initWithFrame:CGRectZero];
+    if (self) {
+        self.cell = cell;
+    }
+    
+    return self;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -28,9 +40,9 @@
         
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
         [wrapper addSubview:button];
-
+        button.tag = idx;
         button.backgroundColor = obj.color;
-        [button addTarget:obj.target action:obj.action forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self.cell action:@selector(accessoryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [button setTitle:obj.title forState:UIControlStateNormal];
         [button setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
         [button setContentHuggingPriority:UILayoutPriorityRequired - 10 forAxis:UILayoutConstraintAxisHorizontal];

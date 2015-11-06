@@ -8,7 +8,29 @@ NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverri
 @property (nonatomic) UIView *privateContentView;
 @property (nonatomic) NSLayoutConstraint *contentLeftConstraint;
 @property (nonatomic) KMCellActionView *actionView;
+@property (nonatomic) NSArray<KMCellAction *>* cellActions;
 @end
+
+@implementation UIView (Helpers)
+
+- (BOOL)aapl_sendAction:(SEL)action
+{
+    // Get the target in the responder chain
+    id sender = self;
+    id target = sender;
+    
+    while (target && ![target canPerformAction:action withSender:sender]) {
+        target = [target nextResponder];
+    }
+    
+    if (!target)
+        return NO;
+    
+    return [[UIApplication sharedApplication] sendAction:action to:target from:sender forEvent:nil];
+}
+
+@end
+
 
 @implementation KMCollectionViewCell
 
@@ -36,7 +58,7 @@ NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverri
         
         [contentView addConstraints:constraints];
         
-        _actionView = [[KMCellActionView alloc] init];
+        _actionView = [[KMCellActionView alloc] initWithCell:self];
         [contentView addSubview:_actionView];
 
         contentView.clipsToBounds = YES;
@@ -44,8 +66,27 @@ NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverri
     return self;
 }
 
+- (void)accessoryButtonTapped:(UIButton *)button
+{
+    KMCellAction *action = [self actionForButton:button];
+    [self performAction:action];
+    [self closeActionPane];
+}
+
+- (void)performAction:(KMCellAction *)action
+{
+    [self aapl_sendAction:action.action];
+}
+
+- (KMCellAction *)actionForButton:(UIButton *)button
+{
+    KMCellAction *action = _cellActions[button.tag];
+    return action;
+}
+
 - (void)setCellActions:(NSArray *)actions
 {
+    _cellActions = [actions copy];
     [self.actionView addSubviewsForActions:actions];
 }
 

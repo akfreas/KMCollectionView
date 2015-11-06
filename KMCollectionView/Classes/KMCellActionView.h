@@ -4,6 +4,8 @@
 
 @interface KMCellActionView : UIView
 
+- (id)initWithCell:(UICollectionViewCell *)cell;
+
 - (void)addSubviewsForActions:(NSArray <KMCellAction *>*)actions;
 
 @end

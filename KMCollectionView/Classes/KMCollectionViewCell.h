@@ -13,5 +13,7 @@
 - (void)openActionPaneWithActions:(NSArray<KMCellAction *>*)actions;
 - (void)setCellActions:(NSArray<KMCellAction *>*)actions;
 - (void)closeActionPane;
+- (void)performAction:(KMCellAction *)action;
+- (void)accessoryButtonTapped:(UIButton *)button;
 
 @end
