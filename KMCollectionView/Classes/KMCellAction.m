@@ -18,4 +18,12 @@
     return self;
 }
 
+- (UIColor *)color
+{
+    if (_color == nil) {
+        return [UIColor redColor];
+    }
+    return _color;
+}
+
 @end
