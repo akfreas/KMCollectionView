@@ -38,7 +38,7 @@
 - (void)notifySectionsRemovedAtIndexSet:(NSIndexSet * __nonnull)indexSet;
 - (NSInteger)numberOfSections;
 - (KMCollectionViewCellMapping * __nonnull)collectionView:(UICollectionView * __nonnull)collectionView cellInformationForIndexPath:(NSIndexPath * __nonnull)indexPath;
-- (NSObject * __nonnull)collectionView:(UICollectionView * __nonnull)collectionView cellDataForIndexPath:(NSIndexPath * __nonnull)indexPath;
+- (NSObject * __nullable)collectionView:(UICollectionView * __nonnull)collectionView cellDataForIndexPath:(NSIndexPath * __nonnull)indexPath;
 - (NSArray<KMCellAction *>* __nullable)collectionView:(UICollectionView * __nonnull)collectionView cellActionForCellAtIndexPath:(NSIndexPath * __nonnull)indexPath;
 - (KMCollectionViewCellMapping * __nonnull)collectionView:(UICollectionView * __nonnull)collectionView cellInformationForSectionAtIndex:(NSInteger)section;
 - (KMCollectionViewCellMapping * __nonnull)collectionView:(UICollectionView * __nonnull)collectionView cellInformationForHeaderInSection:(NSInteger)section;

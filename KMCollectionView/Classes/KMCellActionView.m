@@ -40,7 +40,6 @@
         [button autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:wrapper];
         [button autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:wrapper];
         
-        
         [wrapper autoPinEdge:ALEdgeLeft toEdge:edge ofView:lastView];
         [wrapper autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self];
         [wrapper autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];
