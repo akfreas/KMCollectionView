@@ -254,7 +254,7 @@ static __weak id currentFirstResponder;
 {
     if (self.contentSize.height <= self.frame.size.height) {
         [UIView animateWithDuration:0.25f animations:^{
-            [self setContentOffset:CGPointZero animated:YES];
+            [self setContentOffset:CGPointZero animated:NO];
         }];
     }
 }
