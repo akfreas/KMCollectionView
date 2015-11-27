@@ -43,7 +43,8 @@ static __weak id currentFirstResponder;
 
 - (void)loadView
 {
-    [self setCollectionView:[[KMCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.collectionViewLayout]];
+    [super loadView];
+    self.collectionView = [[KMCollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:self.collectionViewLayout];
 }
 
 - (void)viewDidLoad

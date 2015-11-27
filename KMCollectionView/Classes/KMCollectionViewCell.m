@@ -39,31 +39,73 @@ NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverri
     self = [super initWithFrame:frame];
     if (self) {
         UIView *contentView = [super contentView];
-        _privateContentView = [[UIView alloc] initWithFrame:CGRectZero];
+        _privateContentView = [[UIView alloc] initWithFrame:contentView.bounds];
         [contentView addSubview:_privateContentView];
+
         _privateContentView.translatesAutoresizingMaskIntoConstraints = NO;
 
         NSMutableArray *constraints = [NSMutableArray array];
 
-        [constraints addObject:[NSLayoutConstraint constraintWithItem:_privateContentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+        [constraints addObject:[NSLayoutConstraint
+                                constraintWithItem:_privateContentView
+                                attribute:NSLayoutAttributeTop
+                                relatedBy:NSLayoutRelationEqual
+                                toItem:contentView
+                                attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                constant:0]];
         
-        NSLayoutConstraint *_contentHeightConstraint = [NSLayoutConstraint constraintWithItem:_privateContentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeHeight multiplier:1 constant:0];
+        NSLayoutConstraint *_contentHeightConstraint = [NSLayoutConstraint
+                                                        constraintWithItem:_privateContentView
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                        toItem:contentView
+                                                        attribute:NSLayoutAttributeHeight
+                                                        multiplier:1
+                                                        constant:0];
         [constraints addObject:_contentHeightConstraint];
         
-        NSLayoutConstraint *_contentWidthConstraint = [NSLayoutConstraint constraintWithItem:_privateContentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeWidth multiplier:1 constant:0];
+        NSLayoutConstraint *_contentWidthConstraint = [NSLayoutConstraint
+                                                       constraintWithItem:_privateContentView
+                                                       attribute:NSLayoutAttributeWidth
+                                                       relatedBy:NSLayoutRelationEqual
+                                                       toItem:contentView
+                                                       attribute:NSLayoutAttributeWidth
+                                                       multiplier:1
+                                                       constant:0];
         [constraints addObject:_contentWidthConstraint];
-        
-        _contentLeftConstraint = [NSLayoutConstraint constraintWithItem:_privateContentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
-        [constraints addObject:_contentLeftConstraint];
-        
-        [contentView addConstraints:constraints];
-        
-        _actionView = [[KMCellActionView alloc] initWithCell:self];
-        [contentView addSubview:_actionView];
 
+        _contentLeftConstraint = [NSLayoutConstraint
+                                  constraintWithItem:_privateContentView
+                                  attribute:NSLayoutAttributeLeft
+                                  relatedBy:NSLayoutRelationEqual
+                                  toItem:contentView
+                                  attribute:NSLayoutAttributeLeft
+                                  multiplier:1
+                                  constant:0];
+        [constraints addObject:_contentLeftConstraint];
+
+        self.layoutMargins = UIEdgeInsetsMake(8, 15, 8, 15);
+
+        [contentView addConstraints:constraints];
+        _actionView = [[KMCellActionView alloc] initWithCell:self];
         contentView.clipsToBounds = YES;
     }
     return self;
+}
+
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
+{
+    [super applyLayoutAttributes:layoutAttributes];
+    self.hidden = layoutAttributes.hidden;
+
+}
+
+
+- (void)setLayoutMargins:(UIEdgeInsets)layoutMargins
+{
+    self.contentView.layoutMargins = layoutMargins;
+    [super setLayoutMargins:layoutMargins];
 }
 
 - (void)accessoryButtonTapped:(UIButton *)button
@@ -174,28 +216,16 @@ NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverri
 
 - (CGSize)prepreferredLayoutSizeFittingSize:(CGSize)targetSize
 {
-    CGRect originalFrame = self.frame;
+    UIView *refView = [super contentView];
+    CGRect frame = refView.frame;
     
-    // assert: targetSize.width has the required width of the cell
+    [self layoutSubviews];
     
-    // step1: set the cell.frame to use that width
-    CGRect frame = self.frame;
-    frame.size = targetSize;
-    self.frame = frame;
+    CGSize fittingSize = CGSizeMake(frame.size.width, UILayoutFittingCompressedSize.height);
+    frame.size = [self systemLayoutSizeFittingSize:fittingSize withHorizontalFittingPriority:UILayoutPriorityDefaultHigh verticalFittingPriority:UILayoutPriorityFittingSizeLevel];
+
     
-    // step2: layout the cell
-    [self setNeedsLayout];
-    [self layoutIfNeeded];
-    
-    // assert: the label's bounds and preferredMaxLayoutWidth are set to the width required by the cell's width
-    
-    // step3: compute how tall the cell needs to be
-    
-    // this causes the cell to compute the height it needs, which it does by asking the
-    // label what height it needs to wrap within its current bounds (which we just set).
-    CGSize computedSize = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    
-    self.frame = originalFrame;
-    return computedSize;
+//    refView.frame = originalFrame;
+    return frame.size;
 }
 @end

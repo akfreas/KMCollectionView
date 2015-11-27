@@ -187,7 +187,7 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
 
 - (void)notifyBatchUpdate:(dispatch_block_t)update
 {
-    [self notifyBatchUpdate:update complete:^{}];
+    [self notifyBatchUpdate:update complete:nil];
 }
 
 - (void)notifyBatchUpdate:(dispatch_block_t)update complete:(dispatch_block_t)complete

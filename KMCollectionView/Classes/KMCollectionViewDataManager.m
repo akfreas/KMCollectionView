@@ -207,15 +207,13 @@ static NSString *kItemCountKey = @"itemCount";
         cellSize.height = collectionView.frame.size.height * cellSize.height;
     }
     if (mapping.options & KMCollectionViewCellMappingAutoLayoutSize) {
-        UICollectionViewCell *sizingCell = [[NSClassFromString(mapping.cellClassString) alloc] initWithFrame:CGRectZero];
+        UICollectionViewCell *sizingCell = [[NSClassFromString(mapping.cellClassString) alloc] initWithFrame:CGRectMake(0, 0, collectionView.frame.size.width, 200.0)];
         if ([sizingCell isKindOfClass:[KMCollectionViewCell class]]) {
             NSObject *cellData = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellDataForIndexPath:indexPath];
             KMCollectionViewCell *collectionViewCell = (KMCollectionViewCell *)sizingCell;
             [collectionViewCell configureCellDataWithObject:cellData];
             CGFloat requiredWidth = cellSize.width;
-            
-            // NOTE: here is where we ask our sizing cell to compute what height it needs
-            CGSize targetSize = CGSizeMake(requiredWidth, 0.0);
+            CGSize targetSize = sizingCell.frame.size;
             CGSize computedSize = [collectionViewCell prepreferredLayoutSizeFittingSize:targetSize];
             
             // collection view doesn't like cells with an height of zero

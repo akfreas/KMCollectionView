@@ -16,7 +16,9 @@
     if (self) {
         self.cell = cell;
     }
-    
+    [self setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    [self setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+
     return self;
 }
 
