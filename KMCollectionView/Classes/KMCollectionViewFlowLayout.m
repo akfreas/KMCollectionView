@@ -56,6 +56,7 @@
     
     // First get the superclass attributes.
     NSArray *attributes = [super layoutAttributesForElementsInRect:rect];
+    NSMutableArray *updatedAttributes = [NSMutableArray arrayWithArray:attributes];
     
     // Check if we've pulled below past the lowest position
     if (offset.y < minY) {
@@ -72,11 +73,14 @@
                 wasStretchyHeaderCell = YES;
                for (UICollectionViewLayoutAttributes *attrs in attributes) {
                    if (attrs.indexPath.section == 0 && attrs.indexPath.item == 0) {
+                       UICollectionViewLayoutAttributes *newAttributes = [attrs copy];
+                       NSUInteger index = [updatedAttributes indexOfObject:attrs];
                        CGSize cellSize = headerMapping.size;
-                       CGRect cellRect = [attrs frame];
+                       CGRect cellRect = [newAttributes frame];
                        cellRect.size.height = MAX(minY, cellSize.height + deltaY);
                        cellRect.origin.y = cellRect.origin.y - deltaY;
-                       [attrs setFrame:cellRect];
+                       [newAttributes setFrame:cellRect];
+                       updatedAttributes[index] = newAttributes;
                        break;
                    }
                }
@@ -93,17 +97,20 @@
                     
                     // Adjust the header's height and y based on how much the user
                     // has pulled down.
+                    UICollectionViewLayoutAttributes *newAttributes = [attrs copy];
+                    NSUInteger index = [updatedAttributes indexOfObject:attrs];
                     CGSize headerSize = [self headerReferenceSize];
                     CGRect headerRect = [attrs frame];
                     headerRect.size.height = MAX(minY, headerSize.height + deltaY);
                     headerRect.origin.y = headerRect.origin.y - deltaY;
-                    [attrs setFrame:headerRect];
+                    [newAttributes setFrame:headerRect];
+                    updatedAttributes[index] = newAttributes;
                     break;
                 }
             }
         }
     }
-    return attributes;
+    return updatedAttributes;
 }
 
 @end
