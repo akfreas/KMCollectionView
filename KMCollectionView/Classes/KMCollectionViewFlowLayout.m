@@ -2,6 +2,7 @@
 #import "KMCollectionViewCellMapping.h"
 #import "KMCollectionViewDataSource.h"
 #import "KMCollectionViewStretchyHeaderCell.h"
+#import "KMCollectionStretchyHeaderView.h"
 
 @implementation KMCollectionViewFlowLayout
 
@@ -63,14 +64,12 @@
         
         // Figure out how much we've pulled down
         CGFloat deltaY = fabsf(offset.y - minY);
-        BOOL wasStretchyHeaderCell = NO;
         if ([collectionView.dataSource isKindOfClass:[KMCollectionViewDataSource class]]) {
             KMCollectionViewDataSource *dataSource = (KMCollectionViewDataSource *)collectionView.dataSource;
             KMCollectionViewCellMapping *headerMapping  = [dataSource collectionView:collectionView cellInformationForIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
             if ([headerMapping.cellClass isSubclassOfClass:[KMCollectionViewStretchyHeaderCell class]]) {
                 // Adjust the header's height and y based on how much the user
                 // has pulled down.
-                wasStretchyHeaderCell = YES;
                for (UICollectionViewLayoutAttributes *attrs in attributes) {
                    if (attrs.indexPath.section == 0 && attrs.indexPath.item == 0) {
                        UICollectionViewLayoutAttributes *newAttributes = [attrs copy];
@@ -84,28 +83,29 @@
                        break;
                    }
                }
-            }
-        }
-        
-        if (wasStretchyHeaderCell == NO) {
-            for (UICollectionViewLayoutAttributes *attrs in attributes) {
-                
-                // Locate the header attributes
-                
-                NSString *kind = [attrs representedElementKind];
-                if (kind == UICollectionElementKindSectionHeader) {
-                    
-                    // Adjust the header's height and y based on how much the user
-                    // has pulled down.
-                    UICollectionViewLayoutAttributes *newAttributes = [attrs copy];
-                    NSUInteger index = [updatedAttributes indexOfObject:attrs];
-                    CGSize headerSize = [self headerReferenceSize];
-                    CGRect headerRect = [attrs frame];
-                    headerRect.size.height = MAX(minY, headerSize.height + deltaY);
-                    headerRect.origin.y = headerRect.origin.y - deltaY;
-                    [newAttributes setFrame:headerRect];
-                    updatedAttributes[index] = newAttributes;
-                    break;
+            } else {
+                headerMapping = [dataSource collectionView:collectionView cellInformationForHeaderInSection:0];
+                if ([headerMapping.cellClass isSubclassOfClass:[KMCollectionStretchyHeaderView class]]) {
+                    for (UICollectionViewLayoutAttributes *attrs in attributes) {
+                        
+                        // Locate the header attributes
+                        
+                        NSString *kind = [attrs representedElementKind];
+                        if (kind == UICollectionElementKindSectionHeader) {
+                            
+                            // Adjust the header's height and y based on how much the user
+                            // has pulled down.
+                            UICollectionViewLayoutAttributes *newAttributes = [attrs copy];
+                            NSUInteger index = [updatedAttributes indexOfObject:attrs];
+                            CGSize headerSize = [self headerReferenceSize];
+                            CGRect headerRect = [attrs frame];
+                            headerRect.size.height = MAX(minY, headerSize.height + deltaY);
+                            headerRect.origin.y = headerRect.origin.y - deltaY;
+                            [newAttributes setFrame:headerRect];
+                            updatedAttributes[index] = newAttributes;
+                            break;
+                        }
+                    }
                 }
             }
         }
