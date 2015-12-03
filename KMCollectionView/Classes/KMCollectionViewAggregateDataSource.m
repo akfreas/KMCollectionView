@@ -359,4 +359,9 @@
     [self.delegate dataSource:self wantsToScrollToItemAtIndexPath:[self globalIndexPath:indexPath forIndexPathFromDataSource:dataSource] scrollPosition:position animated:animated completion:completion];
 }
 
+- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToChangeReactOnOffsetChangesOnReload:(BOOL)reactOnOffsetChangesOnReload
+{
+    [self.delegate dataSource:self wantsToChangeReactOnOffsetChangesOnReload:reactOnOffsetChangesOnReload];
+}
+
 @end

@@ -245,6 +245,13 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     [self notifyWillLoadContent];
 }
 
+- (void)notifyWantsSetReactOnOffsetChangesOnReload:(BOOL)reactOnOffsetChangesOnReload
+{
+    if ([self.delegate respondsToSelector:@selector(dataSource:wantsToChangeReactOnOffsetChangesOnReload:)]) {
+        [self.delegate dataSource:self wantsToChangeReactOnOffsetChangesOnReload:reactOnOffsetChangesOnReload];
+    }
+}
+
 #pragma mark Placeholder
 
 - (BOOL)shouldDisplayPlaceholder

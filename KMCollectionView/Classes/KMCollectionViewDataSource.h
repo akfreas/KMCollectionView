@@ -44,7 +44,7 @@
 - (KMCollectionViewCellMapping * __nonnull)collectionView:(UICollectionView * __nonnull)collectionView cellInformationForHeaderInSection:(NSInteger)section;
 - (KMCollectionViewCellMapping * __nonnull)collectionView:(UICollectionView * __nonnull)collectionView cellInformationForFooterInSection:(NSInteger)section;
 
-
+- (void)notifyWantsSetReactOnOffsetChangesOnReload:(BOOL)reactOnOffsetChangesOnReload;
 
 @end
 
@@ -71,4 +71,6 @@
 - (void)dataSource:(KMCollectionViewDataSource * __nonnull)dataSource didLoadContentWithError:(NSError * __nullable)error;
 - (void)dataSource:(KMCollectionViewDataSource * __nonnull)dataSource didInsertSectionAtIndexSet:(NSIndexSet * __nonnull)indexSet;
 - (void)dataSource:(KMCollectionViewDataSource * __nonnull)dataSource didRemoveSectionAtIndexSet:(NSIndexSet * __nonnull)indexSet;
+
+- (void)dataSource:(KMCollectionViewDataSource * __nonnull)dataSource wantsToChangeReactOnOffsetChangesOnReload:(BOOL)reactOnOffsetChangesOnReload;
 @end

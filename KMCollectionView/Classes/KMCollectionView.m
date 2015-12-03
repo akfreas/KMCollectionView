@@ -92,6 +92,7 @@ static __weak id currentFirstResponder;
     if (self) {
         self.KMCollectionViewKVOContext = (__bridge void *)([[NSUUID UUID] UUIDString]);
         self.shouldUpdateContentOffset = YES;
+        self.reactToOffsetChangesWhileReload = YES;
         self.defaultDataManager = [KMCollectionViewDataManager new];
         self.pagingEnabled = NO;
         _swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
@@ -270,8 +271,12 @@ static __weak id currentFirstResponder;
         return;
     }
     [self removeAllObservers];
-    UIResponder *currentResponder = [UIResponder currentFirstResponder];
-    [currentResponder resignFirstResponder];
+    
+    if (self.reactToOffsetChangesWhileReload == YES) {
+        UIResponder *currentResponder = [UIResponder currentFirstResponder];
+        [currentResponder resignFirstResponder];
+    }
+    
     [self removeTapGesture];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(addTransientObservers) object:nil];
     [self performSelector:@selector(addTransientObservers) withObject:nil afterDelay:0.2f];
@@ -614,5 +619,10 @@ static __weak id currentFirstResponder;
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRemoveSectionAtIndexSet:(NSIndexSet *)indexSet
 {
     [self deleteSections:indexSet];
+}
+
+- (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToChangeReactOnOffsetChangesOnReload:(BOOL)reactOnOffsetChangesOnReload
+{
+    self.reactToOffsetChangesWhileReload = reactOnOffsetChangesOnReload;
 }
 @end
