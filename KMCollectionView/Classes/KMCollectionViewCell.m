@@ -88,7 +88,10 @@ NSString *const KMCollectionViewCellNeedsOverrideExceptionName = @"KMNeedsOverri
         self.layoutMargins = UIEdgeInsetsMake(8, 15, 8, 15);
 
         [contentView addConstraints:constraints];
+        
         _actionView = [[KMCellActionView alloc] initWithCell:self];
+        [contentView addSubview:_actionView];
+
         contentView.clipsToBounds = YES;
     }
     return self;
