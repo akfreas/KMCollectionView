@@ -567,11 +567,16 @@ static __weak id currentFirstResponder;
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didReloadSections:(NSIndexSet *)sections
 {
-    @try {
-        [self reloadSections:sections];
-    }
-    @catch (NSException *exception) {
+    NSUInteger numberOfSections = [dataSource numberOfSections];
+    if (numberOfSections == 0) {
         [self reloadData];
+    } else {
+        @try {
+            [self reloadSections:sections];
+        }
+        @catch (NSException *exception) {
+            [self reloadData];
+        }
     }
 }
 
@@ -587,22 +592,31 @@ static __weak id currentFirstResponder;
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRefreshItemsAtIndexPaths:(NSArray *)indexPaths
 {
-    @try {
-        [self reloadItemsAtIndexPaths:indexPaths];
-    }
-    @catch (NSException *exception) {
+    if ([self indexPathsAreValid:indexPaths]) {
+        @try {
+            [self reloadItemsAtIndexPaths:indexPaths];
+        }
+        @catch (NSException *exception) {
+            [self reloadData];
+        }
+    } else {
         [self reloadData];
     }
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRemoveItemsAtIndexPaths:(NSArray *)indexPaths
 {
-    @try {
-        [self deleteItemsAtIndexPaths:indexPaths];
-    }
-    @catch (NSException *exception) {
+    if ([self indexPathsAreValid:indexPaths]) {
+        @try {
+            [self deleteItemsAtIndexPaths:indexPaths];
+        }
+        @catch (NSException *exception) {
+            [self reloadData];
+        }
+    } else {
         [self reloadData];
     }
+   
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didMoveItemAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)newIndexPath
@@ -624,5 +638,23 @@ static __weak id currentFirstResponder;
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToChangeReactOnOffsetChangesOnReload:(BOOL)reactOnOffsetChangesOnReload
 {
     self.reactToOffsetChangesWhileReload = reactOnOffsetChangesOnReload;
+}
+
+- (BOOL)indexPathsAreValid:(NSArray *)indexPaths
+{
+    BOOL valid = YES;
+    NSUInteger numberOfSections = [self numberOfSections];
+    for (NSIndexPath *indexPath in indexPaths) {
+        if (numberOfSections < indexPath.section) {
+            valid = NO;
+            break;
+        }
+        NSUInteger items = [self.dataSource collectionView:self numberOfItemsInSection:indexPath.section];
+        if (items < indexPath.item) {
+            valid = NO;
+            break;
+        }
+    }
+    return valid;
 }
 @end
