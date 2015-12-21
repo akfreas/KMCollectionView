@@ -568,7 +568,7 @@ static __weak id currentFirstResponder;
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didReloadSections:(NSIndexSet *)sections
 {
     NSUInteger numberOfSections = [dataSource numberOfSections];
-    if (numberOfSections == 0) {
+    if (numberOfSections == 0 || [self sectionsAreValid:sections] == NO) {
         [self reloadData];
     } else {
         @try {
@@ -655,6 +655,18 @@ static __weak id currentFirstResponder;
             break;
         }
     }
+    return valid;
+}
+
+- (BOOL)sectionsAreValid:(NSIndexSet *)sections {
+    __block BOOL valid = YES;
+    NSUInteger numberSections = [self numberOfSections];
+    [sections enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
+        if (numberSections <= idx) {
+            valid = NO;
+            *stop = YES;
+        }
+    }];
     return valid;
 }
 @end
