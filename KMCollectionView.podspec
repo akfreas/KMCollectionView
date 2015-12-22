@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "KMCollectionView"
-  s.version          = "0.4.0"
+  s.version          = "0.4.1"
   s.summary          = "KMCollectionView is the basis for smooth layouts in the Komoot iOS app."
   s.description      = <<-DESC
                        An optional longer description of KMCollectionView
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/komoot/KMCollectionView"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
-  s.author           = { "Alexander Freas" => "alex@komoot.de" }
+  s.author           = { "Matthias Friese" => "matthias@komoot.de" }
   s.source           = { :git => "https://github.com/komoot/KMCollectionView.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '8.0'
