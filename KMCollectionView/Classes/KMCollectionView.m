@@ -461,14 +461,7 @@ static __weak id currentFirstResponder;
 {
     __weak typeof(&*self) weakSelf = self;
     dispatch_block_t update = ^{
-        @try {
-            [weakSelf scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:animated];
-        }
-        @catch (NSException *exception) {
-            if (completion) {
-                completion(nil);
-            }
-        }
+        [weakSelf scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:animated];
         if (completion) {
             if (animated == NO) {
                 UICollectionViewCell *cell = [weakSelf cellForItemAtIndexPath:indexPath];
@@ -571,34 +564,19 @@ static __weak id currentFirstResponder;
     if (numberOfSections == 0 || [self sectionsAreValid:sections] == NO) {
         [self reloadData];
     } else {
-        @try {
-            [self reloadSections:sections];
-        }
-        @catch (NSException *exception) {
-            [self reloadData];
-        }
+       [self reloadSections:sections];
     }
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didInsertItemsAtIndexPaths:(NSArray *)indexPaths
 {
-    @try {
-        [self insertItemsAtIndexPaths:indexPaths];
-    }
-    @catch (NSException *exception) {
-        [self reloadData];
-    }
+   [self insertItemsAtIndexPaths:indexPaths];
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRefreshItemsAtIndexPaths:(NSArray *)indexPaths
 {
     if ([self indexPathsAreValid:indexPaths]) {
-        @try {
-            [self reloadItemsAtIndexPaths:indexPaths];
-        }
-        @catch (NSException *exception) {
-            [self reloadData];
-        }
+       [self reloadItemsAtIndexPaths:indexPaths];
     } else {
         [self reloadData];
     }
@@ -607,12 +585,7 @@ static __weak id currentFirstResponder;
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRemoveItemsAtIndexPaths:(NSArray *)indexPaths
 {
     if ([self indexPathsAreValid:indexPaths]) {
-        @try {
-            [self deleteItemsAtIndexPaths:indexPaths];
-        }
-        @catch (NSException *exception) {
-            [self reloadData];
-        }
+       [self deleteItemsAtIndexPaths:indexPaths];
     } else {
         [self reloadData];
     }
