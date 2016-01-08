@@ -461,14 +461,7 @@ static __weak id currentFirstResponder;
 {
     __weak typeof(&*self) weakSelf = self;
     dispatch_block_t update = ^{
-        @try {
-            [weakSelf scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:animated];
-        }
-        @catch (NSException *exception) {
-            if (completion) {
-                completion(nil);
-            }
-        }
+        [weakSelf scrollToItemAtIndexPath:indexPath atScrollPosition:position animated:animated];
         if (completion) {
             if (animated == NO) {
                 UICollectionViewCell *cell = [weakSelf cellForItemAtIndexPath:indexPath];
@@ -567,42 +560,36 @@ static __weak id currentFirstResponder;
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didReloadSections:(NSIndexSet *)sections
 {
-    @try {
-        [self reloadSections:sections];
-    }
-    @catch (NSException *exception) {
+    NSUInteger numberOfSections = [dataSource numberOfSections];
+    if (numberOfSections == 0 || [self sectionsAreValid:sections] == NO) {
         [self reloadData];
+    } else {
+       [self reloadSections:sections];
     }
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didInsertItemsAtIndexPaths:(NSArray *)indexPaths
 {
-    @try {
-        [self insertItemsAtIndexPaths:indexPaths];
-    }
-    @catch (NSException *exception) {
-        [self reloadData];
-    }
+   [self insertItemsAtIndexPaths:indexPaths];
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRefreshItemsAtIndexPaths:(NSArray *)indexPaths
 {
-    @try {
-        [self reloadItemsAtIndexPaths:indexPaths];
-    }
-    @catch (NSException *exception) {
+    if ([self indexPathsAreValid:indexPaths]) {
+       [self reloadItemsAtIndexPaths:indexPaths];
+    } else {
         [self reloadData];
     }
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didRemoveItemsAtIndexPaths:(NSArray *)indexPaths
 {
-    @try {
-        [self deleteItemsAtIndexPaths:indexPaths];
-    }
-    @catch (NSException *exception) {
+    if ([self indexPathsAreValid:indexPaths]) {
+       [self deleteItemsAtIndexPaths:indexPaths];
+    } else {
         [self reloadData];
     }
+   
 }
 
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didMoveItemAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)newIndexPath
@@ -624,5 +611,35 @@ static __weak id currentFirstResponder;
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToChangeReactOnOffsetChangesOnReload:(BOOL)reactOnOffsetChangesOnReload
 {
     self.reactToOffsetChangesWhileReload = reactOnOffsetChangesOnReload;
+}
+
+- (BOOL)indexPathsAreValid:(NSArray *)indexPaths
+{
+    BOOL valid = YES;
+    NSUInteger numberOfSections = [self numberOfSections];
+    for (NSIndexPath *indexPath in indexPaths) {
+        if (numberOfSections < indexPath.section) {
+            valid = NO;
+            break;
+        }
+        NSUInteger items = [self.dataSource collectionView:self numberOfItemsInSection:indexPath.section];
+        if (items < indexPath.item) {
+            valid = NO;
+            break;
+        }
+    }
+    return valid;
+}
+
+- (BOOL)sectionsAreValid:(NSIndexSet *)sections {
+    __block BOOL valid = YES;
+    NSUInteger numberSections = [self numberOfSections];
+    [sections enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
+        if (numberSections <= idx) {
+            valid = NO;
+            *stop = YES;
+        }
+    }];
+    return valid;
 }
 @end
