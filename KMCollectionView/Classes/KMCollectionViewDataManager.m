@@ -191,20 +191,32 @@ static NSString *kItemCountKey = @"itemCount";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     KMCollectionViewCellMapping *mapping = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellInformationForIndexPath:indexPath];
-    CGSize cellSize = mapping.size;
+    __block CGSize cellSize = mapping.size;
     
-    if (mapping.options & KMCollectionViewCellMappingWidthUndefined) {
-        cellSize.width = collectionView.frame.size.width;
-    } if (mapping.options & KMCollectionViewCellMappingWidthAsPercentage) {
-        cellSize.width = collectionView.frame.size.width * cellSize.width;
-    }
-    
+    dispatch_block_t evaluateWidth = ^(void) {
+        if (mapping.options & KMCollectionViewCellMappingWidthUndefined) {
+            cellSize.width = collectionView.frame.size.width;
+        }
+        if (mapping.options & KMCollectionViewCellMappingWidthAsPercentage) {
+            cellSize.width = collectionView.frame.size.width * cellSize.width;
+        }
+    };
+    evaluateWidth();
     if (mapping.options & KMCollectionViewCellMappingHeightUndefined) {
         cellSize.height = 44.0f;
-    } else if (mapping.options & KMCollectionViewCellMappingSquare) {
-        cellSize.height = cellSize.width;
-    } else if (mapping.options & KMCollectionViewCellMappingHeightAsPercentage) {
+    }  else if (mapping.options & KMCollectionViewCellMappingHeightAsPercentage) {
         cellSize.height = collectionView.frame.size.height * cellSize.height;
+        evaluateWidth();
+    }
+    
+    if (mapping.options & KMCollectionViewCellMappingSquare) {
+        if (mapping.options & KMCollectionViewCellMappingHeightAsPercentage) {
+            cellSize.width = cellSize.height;
+        } else if (mapping.options & KMCollectionViewCellMappingWidthAsPercentage) {
+            cellSize.height = cellSize.width;
+        } else {
+            cellSize.height = cellSize.width;
+        }
     }
     if (mapping.options & KMCollectionViewCellMappingAutoLayoutSize) {
         UICollectionViewCell *sizingCell = [[NSClassFromString(mapping.cellClassString) alloc] initWithFrame:CGRectMake(0, 0, collectionView.frame.size.width, 200.0)];
@@ -212,7 +224,7 @@ static NSString *kItemCountKey = @"itemCount";
             NSObject *cellData = [(KMCollectionViewDataSource *)collectionView.dataSource collectionView:collectionView cellDataForIndexPath:indexPath];
             KMCollectionViewCell *collectionViewCell = (KMCollectionViewCell *)sizingCell;
             [collectionViewCell configureCellDataWithObject:cellData];
-            CGFloat requiredWidth = cellSize.width;
+
             CGSize targetSize = sizingCell.frame.size;
             CGSize computedSize = [collectionViewCell prepreferredLayoutSizeFittingSize:targetSize];
             
