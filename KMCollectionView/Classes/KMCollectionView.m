@@ -608,6 +608,11 @@ static __weak id currentFirstResponder;
     [self deleteSections:indexSet];
 }
 
+- (void)dataSource:(KMCollectionViewDataSource *)dataSource didRegisterClass:(Class)cls withIdentifier:(NSString *)identifier
+{
+    [self registerClass:cls forCellWithReuseIdentifier:identifier];
+}
+
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource wantsToChangeReactOnOffsetChangesOnReload:(BOOL)reactOnOffsetChangesOnReload
 {
     self.reactToOffsetChangesWhileReload = reactOnOffsetChangesOnReload;

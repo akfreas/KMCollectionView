@@ -362,6 +362,15 @@ NSString *const kKMCollectionElementKindPlaceHolder = @"kKMCollectionElementKind
     }
 }
 
+- (void)notifyWantsToRegisterClass:(Class)cls forIdentifier:(NSString *)identifier {
+    
+    KOMOOT_ASSERT_MAIN_THREAD;
+    id<KMCollectionViewDataSourceDelegate> delegate = self.delegate;
+    if ([delegate respondsToSelector:@selector(dataSource:didRegisterClass:withIdentifier:)]) {
+        [delegate dataSource:self didRegisterClass:cls withIdentifier:identifier];
+    }
+}
+
 - (void)notifyWantsToIncreaseVerticalContentOffset:(CGFloat)delta
 {
     KOMOOT_ASSERT_MAIN_THREAD;

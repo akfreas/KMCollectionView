@@ -245,6 +245,8 @@ static NSString *kItemCountKey = @"itemCount";
             cellSize.height = 44.0f;
         }
     }
+    NSAssert(cellSize.height > 0, @"Cell height must be greateer than 0");
+    NSAssert(cellSize.width > 0, @"Cell width must be greateer than 0");
     return cellSize;
 }
 

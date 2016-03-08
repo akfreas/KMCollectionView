@@ -301,6 +301,11 @@
     [self notifyWantsToIncreaseVerticalContentOffset:delta];
 }
 
+- (void)dataSource:(KMCollectionViewDataSource *)dataSource didRegisterClass:(Class)cls withIdentifier:(NSString *)identifier
+{
+    [super notifyWantsToRegisterClass:cls forIdentifier:identifier];
+}
+
 - (void)dataSource:(KMCollectionViewDataSource *)dataSource didInsertItemsAtIndexPaths:(NSArray *)indexPaths
 {
     [self notifyItemsInsertedAtIndexPaths:[self mappedIndexPathsForIndexPaths:indexPaths fromDataSource:dataSource]];

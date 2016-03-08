@@ -29,6 +29,7 @@
 - (void)notifyBatchUpdate:(dispatch_block_t __nonnull)update complete:(dispatch_block_t __nonnull)complete;
 - (void)notifyWantsInvalidateLayout;
 - (void)notifyWillLoadContent;
+- (void)notifyWantsToRegisterClass:(Class __nonnull)cls forIdentifier:(NSString * __nonnull)identifier;
 - (void)notifyWantsToIncreaseVerticalContentOffset:(CGFloat)delta;
 - (void)notifyWantsToScrollToItemAtIndexPath:(NSIndexPath * __nonnull)indexPath scrollPosition:(UICollectionViewScrollPosition)position animated:(BOOL)animated completion:(void(^ __nullable)(UICollectionViewCell * __nonnull))completion;
 - (void)notifyWantsToScrollToSupplementaryViewOfType:(NSString * __nonnull)type inSection:(NSInteger)section scrollPosition:(UICollectionViewScrollPosition)position;
@@ -71,6 +72,7 @@
 - (void)dataSource:(KMCollectionViewDataSource * __nonnull)dataSource didLoadContentWithError:(NSError * __nullable)error;
 - (void)dataSource:(KMCollectionViewDataSource * __nonnull)dataSource didInsertSectionAtIndexSet:(NSIndexSet * __nonnull)indexSet;
 - (void)dataSource:(KMCollectionViewDataSource * __nonnull)dataSource didRemoveSectionAtIndexSet:(NSIndexSet * __nonnull)indexSet;
+- (void)dataSource:(KMCollectionViewDataSource * __nonnull)dataSource didRegisterClass:(Class __nonnull)cls withIdentifier:(NSString * __nonnull)identifier;
 
 - (void)dataSource:(KMCollectionViewDataSource * __nonnull)dataSource wantsToChangeReactOnOffsetChangesOnReload:(BOOL)reactOnOffsetChangesOnReload;
 @end
