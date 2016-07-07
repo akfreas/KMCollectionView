@@ -41,9 +41,9 @@
 - (KMCollectionViewCellMapping * __nonnull)collectionView:(UICollectionView * __nonnull)collectionView cellInformationForIndexPath:(NSIndexPath * __nonnull)indexPath;
 - (NSObject * __nullable)collectionView:(UICollectionView * __nonnull)collectionView cellDataForIndexPath:(NSIndexPath * __nonnull)indexPath;
 - (NSArray<KMCellAction *>* __nullable)collectionView:(UICollectionView * __nonnull)collectionView cellActionForCellAtIndexPath:(NSIndexPath * __nonnull)indexPath;
-- (KMCollectionViewCellMapping * __nonnull)collectionView:(UICollectionView * __nonnull)collectionView cellInformationForSectionAtIndex:(NSInteger)section;
-- (KMCollectionViewCellMapping * __nonnull)collectionView:(UICollectionView * __nonnull)collectionView cellInformationForHeaderInSection:(NSInteger)section;
-- (KMCollectionViewCellMapping * __nonnull)collectionView:(UICollectionView * __nonnull)collectionView cellInformationForFooterInSection:(NSInteger)section;
+- (KMCollectionViewCellMapping *)collectionView:(UICollectionView * __nonnull)collectionView cellInformationForSectionAtIndex:(NSInteger)section;
+- (KMCollectionViewCellMapping *)collectionView:(UICollectionView * __nonnull)collectionView cellInformationForHeaderInSection:(NSInteger)section;
+- (KMCollectionViewCellMapping *)collectionView:(UICollectionView * __nonnull)collectionView cellInformationForFooterInSection:(NSInteger)section;
 
 - (void)notifyWantsSetReactOnOffsetChangesOnReload:(BOOL)reactOnOffsetChangesOnReload;
 
