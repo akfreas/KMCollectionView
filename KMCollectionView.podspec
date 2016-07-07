@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "KMCollectionView"
-  s.version          = "0.4.1"
+  s.version          = "0.4.3"
   s.summary          = "KMCollectionView is the basis for smooth layouts in the Komoot iOS app."
   s.description      = <<-DESC
                        An optional longer description of KMCollectionView
